@@ -2,25 +2,35 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <meta name="description" content="حاسبة العمر المباشر بالثواني والدقائق والساعات والأيام. أدخل تاريخ ووقت الميلاد وشاهد العمر يتحدث لحظيًا.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0f172a">
+
+  <!-- الرابط النهائي (ROOT) -->
   <link rel="canonical" href="https://tarekja.github.io/">
-<link rel="icon" href="favicon.ico">
-<link rel="apple-touch-icon" href="favicon-512.png">
-<!-- Google tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ91MD319E"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-FZ91MD319E', { anonymize_ip: true });
-</script>
+  <link rel="icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="favicon-512.png">
+
   <meta property="og:title" content="حاسبة العمر المباشر | Live Age Calculator">
   <meta property="og:description" content="احسب عمرك بالثواني والدقائق والساعات والأيام بشكل مباشر ومحدّث كل ثانية.">
   <meta property="og:url" content="https://tarekja.github.io/">
   <meta property="og:type" content="website">
 
-  <meta name="robots" content="index,follow">
+  <!-- Google Analytics (مرة واحدة فقط) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ91MD319E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FZ91MD319E', { anonymize_ip: true });
+  </script>
+
+  <!-- Google AdSense -->
+  <meta name="google-adsense-account" content="ca-pub-3878960602510145">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3878960602510145"
+          crossorigin="anonymous"></script>
 
   <title>حاسبة العمر المباشر | Live Age Calculator</title>
 
@@ -86,7 +96,6 @@
       font-size:14px;
     }
 
-    /* ====== HINTS ====== */
     .hint{
       margin-top: 6px;
       font-size: 12px;
@@ -184,7 +193,6 @@
       font-weight: normal;
     }
 
-    /* تنسيق بسيط لبيانات التواصل */
     .contact-meta{
       margin-top: 10px;
       padding-top: 10px;
@@ -197,23 +205,11 @@
       h1{ font-size: 20px; }
     }
   </style>
-  <!-- Google Analytics (GA4) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ91MD319E"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag("js", new Date());
-    gtag("config", "G-FZ91MD319E");
-  </script>
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3878960602510145" crossorigin="anonymous"></script>
 </head>
 
 <body>
   <div class="page">
     <div class="container">
-
-      <!-- ====== APP ====== -->
       <div class="box">
         <h1 id="title">حاسبة العمر المباشر</h1>
         <div class="subnote">
@@ -262,7 +258,7 @@
           <div>
             روابط مفيدة:
             <a href="#about" onclick="openDetails('about')">من نحن</a> ·
-            <a href="privacy.html">سياسة الخصوصية</a> ·
+            <a href="/privacy.html">سياسة الخصوصية</a> ·
             <a href="#contact" onclick="openDetails('contact')">تواصل</a>
           </div>
 
@@ -274,21 +270,9 @@
             </p>
           </details>
 
-          <details id="privacy">
-            <summary>سياسة الخصوصية</summary>
-            <p>
-              لا نقوم بإرسال بياناتك لأي خادم؛ الحساب يتم داخل المتصفح فقط.
-              قد نقوم بحفظ الاسم/تاريخ الميلاد/وقت الميلاد محليًا داخل جهازك لتسهيل الاستخدام (Local Storage)، ويمكنك مسحه من زر "مسح".
-              قد يتم عرض إعلانات من جهات خارجية مستقبلًا، وقد تستخدم ملفات تعريف الارتباط (Cookies) لتحسين عرض الإعلانات.
-            </p>
-          </details>
-
           <details id="contact">
             <summary>تواصل</summary>
-            <p>
-              إذا عندك اقتراحات أو ملاحظات على الموقع، تواصل معي عبر الوسائل التالية:
-            </p>
-
+            <p>إذا عندك اقتراحات أو ملاحظات على الموقع، تواصل معي عبر الوسائل التالية:</p>
             <div class="contact-meta">
               <div><b>الاسم:</b> Tarek Jawish</div>
               <div><b>الصفة:</b> MEAL Expert</div>
@@ -302,7 +286,6 @@
           </details>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -332,13 +315,9 @@
     }
 
     function restoreInputs(){
-      const n = localStorage.getItem(STORAGE_KEYS.name) || "";
-      const d = localStorage.getItem(STORAGE_KEYS.date) || "";
-      const t = localStorage.getItem(STORAGE_KEYS.time) || "";
-
-      $("name").value = n;
-      $("birthDate").value = d;
-      $("birthTime").value = t;
+      $("name").value = localStorage.getItem(STORAGE_KEYS.name) || "";
+      $("birthDate").value = localStorage.getItem(STORAGE_KEYS.date) || "";
+      $("birthTime").value = localStorage.getItem(STORAGE_KEYS.time) || "";
     }
 
     function updateTimePreview(){
@@ -346,7 +325,6 @@
       if (!preview) return;
 
       const t = ($("birthTime").value || "").trim();
-
       if (!t){
         preview.innerHTML = 'سيتم اعتبار الوقت <b>00:00:00</b> إذا تركته فارغًا.';
         return;
@@ -362,13 +340,10 @@
 
       const ampm = isPM ? "PM" : "AM";
       const mm2 = String(mm).padStart(2, "0");
-
       preview.textContent = `${t} = ${hh12}:${mm2} ${ampm}`;
     }
 
     function buildLocalDate(dateStr, timeStr){
-      // dateStr: YYYY-MM-DD
-      // timeStr: HH:MM(:SS)  (عادةً 24 ساعة)
       const parts = (dateStr || "").split("-").map(Number);
       if (parts.length !== 3 || parts.some(Number.isNaN)) return null;
 
@@ -380,7 +355,6 @@
 
       const y = parts[0], m = parts[1], d = parts[2];
       const dt = new Date(y, m - 1, d, hh, mm, ss);
-
       if (Number.isNaN(dt.getTime())) return null;
       return dt;
     }
@@ -394,13 +368,7 @@
       $("result").style.display = "none";
       $("title").textContent = "حاسبة العمر المباشر";
 
-      $("years").textContent = "";
-      $("months").textContent = "";
-      $("weeks").textContent = "";
-      $("days").textContent = "";
-      $("hours").textContent = "";
-      $("minutes").textContent = "";
-      $("seconds").textContent = "";
+      ["years","months","weeks","days","hours","minutes","seconds"].forEach(id => $(id).textContent = "");
 
       $("name").value = "";
       $("birthDate").value = "";
@@ -416,8 +384,6 @@
     function start(){
       const name = ($("name").value || "").trim();
       const date = $("birthDate").value;
-
-      // إذا ترك الوقت فارغًا سيتم اعتباره 00:00:00
       const time = $("birthTime").value || "00:00:00";
 
       if (!date){
@@ -454,7 +420,6 @@
         const days    = Math.floor(hours / 24);
         const weeks   = Math.floor(days / 7);
 
-        // Approximate years/months using average year length
         const yearsApprox  = diffMs / (1000 * 60 * 60 * 24 * 365.2425);
         const monthsApprox = yearsApprox * 12;
 
@@ -472,13 +437,11 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      // منع اختيار تاريخ مستقبلي (تحسين تجربة المستخدم)
       const today = new Date().toISOString().split("T")[0];
       $("birthDate").setAttribute("max", today);
 
       restoreInputs();
 
-      // معاينة AM/PM للوقت + رسالة عند تركه فارغًا
       updateTimePreview();
       $("birthTime").addEventListener("input", updateTimePreview);
 
@@ -486,18 +449,8 @@
         $(id).addEventListener("input", saveInputs);
       });
 
-      // Optional: إذا كانت البيانات موجودة، شغّل الحساب تلقائيًا
-      if ($("birthDate").value) {
-        start();
-      }
+      if ($("birthDate").value) start();
     });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
