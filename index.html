@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="احسب عمرك بشكل مباشر بالسنوات والأشهر والأيام والساعات والدقائق والثواني. أدخل تاريخ ووقت الميلاد وشاهد العمر يتحدث كل ثانية." />
-  <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#0f172a" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="حاسبة العمر المباشر بالثواني والدقائق والساعات والأيام. أدخل تاريخ ووقت الميلاد وشاهد العمر يتحدث لحظيًا.">
+  <link rel="canonical" href="https://tarekja.github.io/live-age-calculator/">
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="favicon-512.png">
 
-  <link rel="canonical" href="https://tarekja.github.io/" />
-  <link rel="icon" href="favicon.ico" />
-  <link rel="apple-touch-icon" href="favicon-512.png" />
+  <meta property="og:title" content="حاسبة العمر المباشر | Live Age Calculator">
+  <meta property="og:description" content="احسب عمرك بالثواني والدقائق والساعات والأيام بشكل مباشر ومحدّث كل ثانية.">
+  <meta property="og:url" content="https://tarekja.github.io/live-age-calculator/">
+  <meta property="og:type" content="website">
 
-  <meta property="og:title" content="حاسبة العمر المباشر | Live Age Calculator" />
-  <meta property="og:description" content="احسب عمرك بالثواني والدقائق والساعات والأيام بشكل مباشر، ويتحدث كل ثانية." />
-  <meta property="og:url" content="https://tarekja.github.io/" />
-  <meta property="og:type" content="website" />
-
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3878960602510145" crossorigin="anonymous"></script>
+  <meta name="robots" content="index,follow">
 
   <title>حاسبة العمر المباشر | Live Age Calculator</title>
 
@@ -193,11 +189,17 @@
       .box{ padding: 18px; }
       h1{ font-size: 20px; }
     }
-  
-
-    a.inline-link{color: var(--accent); text-decoration: none;}
-    a.inline-link:hover{ text-decoration: underline; }
-</style>
+  </style>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ91MD319E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-FZ91MD319E");
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3878960602510145" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -253,7 +255,7 @@
           <div>
             روابط مفيدة:
             <a href="#about" onclick="openDetails('about')">من نحن</a> ·
-            <a href="#privacy" onclick="openDetails('privacy')">سياسة الخصوصية</a> ·
+            <a href="privacy.html">سياسة الخصوصية</a> ·
             <a href="#contact" onclick="openDetails('contact')">تواصل</a>
           </div>
 
@@ -266,11 +268,13 @@
           </details>
 
           <details id="privacy">
-        <summary>سياسة الخصوصية</summary>
-        <p>نحترم خصوصيتك. إدخالات الاسم/تاريخ الميلاد/وقت الميلاد تُستخدم داخل المتصفح فقط لعرض نتيجة الحاسبة، ولا يتم إرسالها إلى أي خادم تابع لنا.</p>
-        <p>قد تستخدم خدمات طرف ثالث (مثل Google AdSense) ملفات تعريف ارتباط (Cookies) لأغراض الإعلانات والقياس بحسب إعداداتك والقوانين المطبقة على منطقتك.</p>
-        <p><a class="inline-link" href="privacy.html">عرض صفحة سياسة الخصوصية كاملة</a></p>
-      </details>
+            <summary>سياسة الخصوصية</summary>
+            <p>
+              لا نقوم بإرسال بياناتك لأي خادم؛ الحساب يتم داخل المتصفح فقط.
+              قد نقوم بحفظ الاسم/تاريخ الميلاد/وقت الميلاد محليًا داخل جهازك لتسهيل الاستخدام (Local Storage)، ويمكنك مسحه من زر "مسح".
+              قد يتم عرض إعلانات من جهات خارجية مستقبلًا، وقد تستخدم ملفات تعريف الارتباط (Cookies) لتحسين عرض الإعلانات.
+            </p>
+          </details>
 
           <details id="contact">
             <summary>تواصل</summary>
@@ -483,5 +487,8 @@
   </script>
 </body>
 </html>
+
+
+
 
 
