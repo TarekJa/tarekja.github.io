@@ -8,13 +8,12 @@
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#0f172a">
 
-  <!-- الرابط النهائي (ROOT) -->
   <link rel="canonical" href="https://tarekja.github.io/">
   <link rel="icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="favicon-512.png">
 
-  <meta property="og:title" content="حاسبة العمر المباشر | Live Age Calculator">
-  <meta property="og:description" content="احسب عمرك بالثواني والدقائق والساعات والأيام بشكل مباشر ومحدّث كل ثانية.">
+  <meta property="og:title" content="Live Age Calculator | حاسبة العمر المباشر">
+  <meta property="og:description" content="احسب عمرك بشكل مباشر بالسنوات والأشهر والأيام والساعات والدقائق والثواني.">
   <meta property="og:url" content="https://tarekja.github.io/">
   <meta property="og:type" content="website">
 
@@ -29,10 +28,11 @@
 
   <!-- Google AdSense -->
   <meta name="google-adsense-account" content="ca-pub-3878960602510145">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3878960602510145"
+  <script async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3878960602510145"
           crossorigin="anonymous"></script>
 
-  <title>حاسبة العمر المباشر | Live Age Calculator</title>
+  <title>Live Age Calculator | حاسبة العمر المباشر</title>
 
   <style>
     :root{
@@ -70,6 +70,32 @@
       padding: 24px;
       border-radius:16px;
       box-shadow:0 0 40px rgba(0,0,0,0.7);
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+
+    .lang-wrap{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    select{
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 10px;
+      outline:none;
+      cursor:pointer;
     }
 
     h1{
@@ -211,28 +237,40 @@
   <div class="page">
     <div class="container">
       <div class="box">
+
+        <div class="topbar">
+          <div class="lang-wrap">
+            <span id="uiLangLabel">اللغة</span>
+            <select id="langSelect" aria-label="Language selector">
+              <option value="ar">العربية</option>
+              <option value="tr">Türkçe</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+        </div>
+
         <h1 id="title">حاسبة العمر المباشر</h1>
-        <div class="subnote">
+        <div class="subnote" id="subnote">
           أدخل تاريخ ووقت الميلاد ثم شاهد العمر يتحدث كل ثانية.<br>
           (السنوات/الأشهر تقريبية — بينما الأيام/الساعات/الدقائق/الثواني دقيقة)
         </div>
 
         <div class="field">
-          <label for="name">الاسم</label>
+          <label for="name" id="lblName">الاسم</label>
           <input type="text" id="name" placeholder="أدخل الاسم" maxlength="40">
-          <div class="hint">اختياري. إذا تركته فارغًا سيظهر العنوان العام بدون اسم.</div>
+          <div class="hint" id="hintName">اختياري. إذا تركته فارغًا سيظهر العنوان العام بدون اسم.</div>
         </div>
 
         <div class="field">
-          <label for="birthDate">تاريخ الميلاد</label>
+          <label for="birthDate" id="lblBirthDate">تاريخ الميلاد</label>
           <input type="date" id="birthDate">
-          <div class="hint">مطلوب. اختر التاريخ من التقويم.</div>
+          <div class="hint" id="hintBirthDate">مطلوب. اختر التاريخ من التقويم.</div>
         </div>
 
         <div class="field">
-          <label for="birthTime">ساعة الميلاد</label>
+          <label for="birthTime" id="lblBirthTime">ساعة الميلاد</label>
           <input type="time" id="birthTime" step="1">
-          <div class="hint">
+          <div class="hint" id="hintBirthTime">
             اختياري. إذا تركته فارغًا سنعتبر الوقت <b>00:00:00</b>.<br>
             عادةً الإدخال يكون بنظام <b>24 ساعة</b>: مثال <b>07:30</b> (AM صباحًا) أو <b>19:30</b> (PM مساءً).
           </div>
@@ -240,51 +278,53 @@
         </div>
 
         <div class="actions">
-          <button onclick="start()">احسب العمر</button>
-          <button class="secondary" onclick="resetApp()">مسح</button>
+          <button id="btnStart" onclick="start()">احسب العمر</button>
+          <button id="btnReset" class="secondary" onclick="resetApp()">مسح</button>
         </div>
 
         <div class="result" id="result" aria-live="polite">
-          <div class="row"><div class="label">السنوات (تقريب)</div><div class="value" id="years"></div></div>
-          <div class="row"><div class="label">الأشهر (تقريب)</div><div class="value" id="months"></div></div>
-          <div class="row"><div class="label">الأسابيع</div><div class="value" id="weeks"></div></div>
-          <div class="row"><div class="label">الأيام</div><div class="value" id="days"></div></div>
-          <div class="row"><div class="label">الساعات</div><div class="value" id="hours"></div></div>
-          <div class="row"><div class="label">الدقائق</div><div class="value" id="minutes"></div></div>
-          <div class="row"><div class="label">الثواني</div><div class="value" id="seconds"></div></div>
+          <div class="row"><div class="label" id="rYears">السنوات (تقريب)</div><div class="value" id="years"></div></div>
+          <div class="row"><div class="label" id="rMonths">الأشهر (تقريب)</div><div class="value" id="months"></div></div>
+          <div class="row"><div class="label" id="rWeeks">الأسابيع</div><div class="value" id="weeks"></div></div>
+          <div class="row"><div class="label" id="rDays">الأيام</div><div class="value" id="days"></div></div>
+          <div class="row"><div class="label" id="rHours">الساعات</div><div class="value" id="hours"></div></div>
+          <div class="row"><div class="label" id="rMinutes">الدقائق</div><div class="value" id="minutes"></div></div>
+          <div class="row"><div class="label" id="rSeconds">الثواني</div><div class="value" id="seconds"></div></div>
         </div>
 
         <div class="footer">
           <div>
-            روابط مفيدة:
-            <a href="#about" onclick="openDetails('about')">من نحن</a> ·
-            <a href="/privacy.html">سياسة الخصوصية</a> ·
-            <a href="#contact" onclick="openDetails('contact')">تواصل</a>
+            <span id="usefulLinks">روابط مفيدة:</span>
+            <a href="#about" onclick="openDetails('about')" id="lnkAbout">من نحن</a> ·
+            <a href="/privacy.html" id="lnkPrivacy">سياسة الخصوصية</a> ·
+            <a href="#contact" onclick="openDetails('contact')" id="lnkContact">تواصل</a>
           </div>
 
           <details id="about">
-            <summary>من نحن</summary>
-            <p>
+            <summary id="sumAbout">من نحن</summary>
+            <p id="aboutText">
               هذه أداة بسيطة لحساب العمر بشكل مباشر (Real-time) عبر إدخال تاريخ ووقت الميلاد.
               الهدف هو تقديم تجربة سريعة وخفيفة تعمل على الجوال والكمبيوتر.
             </p>
           </details>
 
           <details id="contact">
-            <summary>تواصل</summary>
-            <p>إذا عندك اقتراحات أو ملاحظات على الموقع، تواصل معي عبر الوسائل التالية:</p>
+            <summary id="sumContact">تواصل</summary>
+            <p id="contactIntro">إذا عندك اقتراحات أو ملاحظات على الموقع، تواصل معي عبر الوسائل التالية:</p>
+
             <div class="contact-meta">
-              <div><b>الاسم:</b> Tarek Jawish</div>
-              <div><b>الصفة:</b> MEAL Expert</div>
-              <div><b>البريد:</b> <a href="mailto:tarekjawish89@gmail.com">tarekjawish89@gmail.com</a></div>
-              <div><b>LinkedIn:</b>
-                <a href="https://www.linkedin.com/in/tarek-jawish-890998106/" target="_blank" rel="noopener noreferrer">
+              <div><b id="cNameLbl">الاسم:</b> <span id="cNameVal">Tarek Jawish</span></div>
+              <div><b id="cRoleLbl">الصفة:</b> <span id="cRoleVal">MEAL Expert</span></div>
+              <div><b id="cEmailLbl">البريد:</b> <a href="mailto:tarekjawish89@gmail.com">tarekjawish89@gmail.com</a></div>
+              <div><b id="cLinkedLbl">LinkedIn:</b>
+                <a href="https://www.linkedin.com/in/tarek-jawish-890998106/" target="_blank" rel="noopener noreferrer" id="cLinkedText">
                   الملف الشخصي
                 </a>
               </div>
             </div>
           </details>
         </div>
+
       </div>
     </div>
   </div>
@@ -295,7 +335,8 @@
     const STORAGE_KEYS = {
       name: "lac_name",
       date: "lac_birthDate",
-      time: "lac_birthTime"
+      time: "lac_birthTime",
+      lang: "lac_lang"
     };
 
     function $(id){ return document.getElementById(id); }
@@ -320,17 +361,241 @@
       $("birthTime").value = localStorage.getItem(STORAGE_KEYS.time) || "";
     }
 
+    // ====== I18N ======
+    const I18N = {
+      ar: {
+        langLabel: "اللغة",
+        titleBase: "حاسبة العمر المباشر",
+        subnote: `أدخل تاريخ ووقت الميلاد ثم شاهد العمر يتحدث كل ثانية.<br>(السنوات/الأشهر تقريبية — بينما الأيام/الساعات/الدقائق/الثواني دقيقة)`,
+        lblName: "الاسم",
+        phName: "أدخل الاسم",
+        hintName: "اختياري. إذا تركته فارغًا سيظهر العنوان العام بدون اسم.",
+        lblBirthDate: "تاريخ الميلاد",
+        hintBirthDate: "مطلوب. اختر التاريخ من التقويم.",
+        lblBirthTime: "ساعة الميلاد",
+        hintBirthTime: `اختياري. إذا تركته فارغًا سنعتبر الوقت <b>00:00:00</b>.<br>عادةً الإدخال يكون بنظام <b>24 ساعة</b>: مثال <b>07:30</b> (AM صباحًا) أو <b>19:30</b> (PM مساءً).`,
+        btnStart: "احسب العمر",
+        btnReset: "مسح",
+        rYears: "السنوات (تقريب)",
+        rMonths: "الأشهر (تقريب)",
+        rWeeks: "الأسابيع",
+        rDays: "الأيام",
+        rHours: "الساعات",
+        rMinutes: "الدقائق",
+        rSeconds: "الثواني",
+        usefulLinks: "روابط مفيدة:",
+        lnkAbout: "من نحن",
+        lnkPrivacy: "سياسة الخصوصية",
+        lnkContact: "تواصل",
+        sumAbout: "من نحن",
+        aboutText: "هذه أداة بسيطة لحساب العمر بشكل مباشر (Real-time) عبر إدخال تاريخ ووقت الميلاد. الهدف هو تقديم تجربة سريعة وخفيفة تعمل على الجوال والكمبيوتر.",
+        sumContact: "تواصل",
+        contactIntro: "إذا عندك اقتراحات أو ملاحظات على الموقع، تواصل معي عبر الوسائل التالية:",
+        cNameLbl: "الاسم:",
+        cRoleLbl: "الصفة:",
+        cEmailLbl: "البريد:",
+        cLinkedLbl: "LinkedIn:",
+        cLinkedText: "الملف الشخصي",
+        alertNeedDate: "يرجى إدخال تاريخ الميلاد",
+        alertInvalid: "الرجاء التأكد من صحة تاريخ/وقت الميلاد",
+        alertFuture: "تاريخ/وقت الميلاد لا يمكن أن يكون في المستقبل",
+        timeEmpty: `سيتم اعتبار الوقت <b>00:00:00</b> إذا تركته فارغًا.`,
+        titleFor: (name) => `العمر المباشر لـ ${name}`
+      },
+      en: {
+        langLabel: "Language",
+        titleBase: "Live Age Calculator",
+        subnote: `Enter birth date and time, then watch your age update every second.<br>(Years/months are approximate — days/hours/minutes/seconds are exact)`,
+        lblName: "Name",
+        phName: "Enter name",
+        hintName: "Optional. If empty, the general title will be shown without a name.",
+        lblBirthDate: "Birth date",
+        hintBirthDate: "Required. Choose the date from the calendar.",
+        lblBirthTime: "Birth time",
+        hintBirthTime: `Optional. If empty, time will be set to <b>00:00:00</b>.<br>Input is usually <b>24-hour</b> format: e.g., <b>07:30</b> (AM) or <b>19:30</b> (PM).`,
+        btnStart: "Calculate",
+        btnReset: "Clear",
+        rYears: "Years (approx.)",
+        rMonths: "Months (approx.)",
+        rWeeks: "Weeks",
+        rDays: "Days",
+        rHours: "Hours",
+        rMinutes: "Minutes",
+        rSeconds: "Seconds",
+        usefulLinks: "Useful links:",
+        lnkAbout: "About",
+        lnkPrivacy: "Privacy Policy",
+        lnkContact: "Contact",
+        sumAbout: "About",
+        aboutText: "A lightweight tool to calculate age in real time by entering birth date and time. Designed to work smoothly on mobile and desktop.",
+        sumContact: "Contact",
+        contactIntro: "For suggestions or feedback, you can reach me via:",
+        cNameLbl: "Name:",
+        cRoleLbl: "Role:",
+        cEmailLbl: "Email:",
+        cLinkedLbl: "LinkedIn:",
+        cLinkedText: "Profile",
+        alertNeedDate: "Please enter your birth date",
+        alertInvalid: "Please check the birth date/time values",
+        alertFuture: "Birth date/time cannot be in the future",
+        timeEmpty: `If left empty, time will be set to <b>00:00:00</b>.`,
+        titleFor: (name) => `Live age for ${name}`
+      },
+      tr: {
+        langLabel: "Dil",
+        titleBase: "Canlı Yaş Hesaplayıcı",
+        subnote: `Doğum tarihi ve saatini girin, yaşınız her saniye güncellensin.<br>(Yıl/ay yaklaşık — gün/saat/dakika/saniye kesin)`,
+        lblName: "İsim",
+        phName: "İsim girin",
+        hintName: "İsteğe bağlı. Boş bırakırsanız genel başlık gösterilir.",
+        lblBirthDate: "Doğum tarihi",
+        hintBirthDate: "Gerekli. Takvimden tarih seçin.",
+        lblBirthTime: "Doğum saati",
+        hintBirthTime: `İsteğe bağlı. Boş bırakılırsa saat <b>00:00:00</b> kabul edilir.<br>Giriş genelde <b>24 saat</b> formatıdır: örn. <b>07:30</b> (AM) veya <b>19:30</b> (PM).`,
+        btnStart: "Hesapla",
+        btnReset: "Temizle",
+        rYears: "Yıl (yaklaşık)",
+        rMonths: "Ay (yaklaşık)",
+        rWeeks: "Hafta",
+        rDays: "Gün",
+        rHours: "Saat",
+        rMinutes: "Dakika",
+        rSeconds: "Saniye",
+        usefulLinks: "Bağlantılar:",
+        lnkAbout: "Hakkında",
+        lnkPrivacy: "Gizlilik Politikası",
+        lnkContact: "İletişim",
+        sumAbout: "Hakkında",
+        aboutText: "Doğum tarihi ve saatini girerek yaşınızı gerçek zamanlı hesaplayan hafif bir araç. Mobil ve masaüstünde sorunsuz çalışır.",
+        sumContact: "İletişim",
+        contactIntro: "Öneri veya geri bildirim için şu kanallardan ulaşabilirsiniz:",
+        cNameLbl: "İsim:",
+        cRoleLbl: "Unvan:",
+        cEmailLbl: "E-posta:",
+        cLinkedLbl: "LinkedIn:",
+        cLinkedText: "Profil",
+        alertNeedDate: "Lütfen doğum tarihinizi girin",
+        alertInvalid: "Lütfen doğum tarihi/saat değerlerini kontrol edin",
+        alertFuture: "Doğum tarihi/saat gelecekte olamaz",
+        timeEmpty: `Boş bırakılırsa saat <b>00:00:00</b> kabul edilir.`,
+        titleFor: (name) => `${name} için canlı yaş`
+      }
+    };
+
+    const LANG_META = {
+      ar: { dir: "rtl", lang: "ar" },
+      en: { dir: "ltr", lang: "en" },
+      tr: { dir: "ltr", lang: "tr" }
+    };
+
+    let currentLang = "ar";
+
+    function pickInitialLanguage(){
+      const saved = localStorage.getItem(STORAGE_KEYS.lang);
+      if (saved && I18N[saved]) return saved;
+
+      const urlLang = new URLSearchParams(window.location.search).get("lang");
+      if (urlLang && I18N[urlLang]) return urlLang;
+
+      const langs = (navigator.languages && navigator.languages.length)
+        ? navigator.languages
+        : [navigator.language || "en"];
+
+      const lc = langs.map(x => String(x).toLowerCase());
+      if (lc.some(x => x.startsWith("ar"))) return "ar";
+      if (lc.some(x => x.startsWith("tr"))) return "tr";
+      return "en";
+    }
+
+    function setLanguage(lang){
+      if (!I18N[lang]) lang = "ar";
+      currentLang = lang;
+      localStorage.setItem(STORAGE_KEYS.lang, lang);
+
+      // html lang/dir
+      document.documentElement.lang = LANG_META[lang].lang;
+      document.documentElement.dir = LANG_META[lang].dir;
+
+      const t = I18N[lang];
+
+      $("uiLangLabel").textContent = t.langLabel;
+
+      // Main titles/text
+      $("title").textContent = t.titleBase;
+      $("subnote").innerHTML = t.subnote;
+
+      // Labels + placeholders + hints
+      $("lblName").textContent = t.lblName;
+      $("name").placeholder = t.phName;
+      $("hintName").textContent = t.hintName;
+
+      $("lblBirthDate").textContent = t.lblBirthDate;
+      $("hintBirthDate").textContent = t.hintBirthDate;
+
+      $("lblBirthTime").textContent = t.lblBirthTime;
+      $("hintBirthTime").innerHTML = t.hintBirthTime;
+
+      // Buttons
+      $("btnStart").textContent = t.btnStart;
+      $("btnReset").textContent = t.btnReset;
+
+      // Rows
+      $("rYears").textContent = t.rYears;
+      $("rMonths").textContent = t.rMonths;
+      $("rWeeks").textContent = t.rWeeks;
+      $("rDays").textContent = t.rDays;
+      $("rHours").textContent = t.rHours;
+      $("rMinutes").textContent = t.rMinutes;
+      $("rSeconds").textContent = t.rSeconds;
+
+      // Footer links + details
+      $("usefulLinks").textContent = t.usefulLinks;
+      $("lnkAbout").textContent = t.lnkAbout;
+      $("lnkPrivacy").textContent = t.lnkPrivacy;
+      $("lnkContact").textContent = t.lnkContact;
+
+      $("sumAbout").textContent = t.sumAbout;
+      $("aboutText").textContent = t.aboutText;
+
+      $("sumContact").textContent = t.sumContact;
+      $("contactIntro").textContent = t.contactIntro;
+
+      $("cNameLbl").textContent = t.cNameLbl;
+      $("cRoleLbl").textContent = t.cRoleLbl;
+      $("cEmailLbl").textContent = t.cEmailLbl;
+      $("cLinkedLbl").textContent = t.cLinkedLbl;
+      $("cLinkedText").textContent = t.cLinkedText;
+
+      // Update time preview and title (if running)
+      updateTimePreview();
+      updateDynamicTitle();
+    }
+
+    function updateDynamicTitle(){
+      const name = ($("name").value || "").trim();
+      const t = I18N[currentLang];
+      const isResultVisible = $("result").style.display === "block";
+
+      if (!isResultVisible){
+        $("title").textContent = t.titleBase;
+        return;
+      }
+      $("title").textContent = name ? t.titleFor(name) : t.titleBase;
+    }
+
     function updateTimePreview(){
       const preview = $("timePreview");
       if (!preview) return;
 
-      const t = ($("birthTime").value || "").trim();
-      if (!t){
-        preview.innerHTML = 'سيتم اعتبار الوقت <b>00:00:00</b> إذا تركته فارغًا.';
+      const t = I18N[currentLang];
+      const timeVal = ($("birthTime").value || "").trim();
+
+      if (!timeVal){
+        preview.innerHTML = t.timeEmpty;
         return;
       }
 
-      const parts = t.split(":").map(Number);
+      const parts = timeVal.split(":").map(Number);
       const hh24 = parts[0] ?? 0;
       const mm = parts[1] ?? 0;
 
@@ -340,9 +605,10 @@
 
       const ampm = isPM ? "PM" : "AM";
       const mm2 = String(mm).padStart(2, "0");
-      preview.textContent = `${t} = ${hh12}:${mm2} ${ampm}`;
+      preview.textContent = `${timeVal} = ${hh12}:${mm2} ${ampm}`;
     }
 
+    // ====== App logic ======
     function buildLocalDate(dateStr, timeStr){
       const parts = (dateStr || "").split("-").map(Number);
       if (parts.length !== 3 || parts.some(Number.isNaN)) return null;
@@ -366,8 +632,6 @@
       }
 
       $("result").style.display = "none";
-      $("title").textContent = "حاسبة العمر المباشر";
-
       ["years","months","weeks","days","hours","minutes","seconds"].forEach(id => $(id).textContent = "");
 
       $("name").value = "";
@@ -379,33 +643,36 @@
       localStorage.removeItem(STORAGE_KEYS.time);
 
       updateTimePreview();
+      setLanguage(currentLang); // يعيد عنوان الصفحة للوضع الطبيعي
     }
 
     function start(){
+      const t = I18N[currentLang];
+
       const name = ($("name").value || "").trim();
       const date = $("birthDate").value;
       const time = $("birthTime").value || "00:00:00";
 
       if (!date){
-        alert("يرجى إدخال تاريخ الميلاد");
+        alert(t.alertNeedDate);
         return;
       }
 
       const birthDate = buildLocalDate(date, time);
       if (!birthDate){
-        alert("الرجاء التأكد من صحة تاريخ/وقت الميلاد");
+        alert(t.alertInvalid);
         return;
       }
 
       if (birthDate.getTime() > Date.now()){
-        alert("تاريخ/وقت الميلاد لا يمكن أن يكون في المستقبل");
+        alert(t.alertFuture);
         return;
       }
 
       saveInputs();
 
-      $("title").textContent = name ? ("العمر المباشر لـ " + name) : "حاسبة العمر المباشر";
       $("result").style.display = "block";
+      updateDynamicTitle();
 
       if (interval) clearInterval(interval);
 
@@ -437,19 +704,38 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      // منع اختيار تاريخ مستقبلي
       const today = new Date().toISOString().split("T")[0];
       $("birthDate").setAttribute("max", today);
 
+      // Restore inputs
       restoreInputs();
 
+      // Language
+      currentLang = pickInitialLanguage();
+      $("langSelect").value = currentLang;
+      setLanguage(currentLang);
+
+      $("langSelect").addEventListener("change", (e) => {
+        setLanguage(e.target.value);
+      });
+
+      // Time preview
       updateTimePreview();
       $("birthTime").addEventListener("input", updateTimePreview);
 
+      // Auto-save
       ["name","birthDate","birthTime"].forEach(id => {
-        $(id).addEventListener("input", saveInputs);
+        $(id).addEventListener("input", () => {
+          saveInputs();
+          updateDynamicTitle();
+        });
       });
 
-      if ($("birthDate").value) start();
+      // Auto-start
+      if ($("birthDate").value) {
+        start();
+      }
     });
   </script>
 </body>
