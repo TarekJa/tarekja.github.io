@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>سياسة الخصوصية | حاسبة العمر المباشر</title>
-  <meta name="robots" content="index,follow">
-  <meta name="description" content="سياسة الخصوصية لموقع حاسبة العمر المباشر.">
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="سياسة الخصوصية لموقع Live Age Calculator (حاسبة العمر المباشر)." />
 
-  <link rel="canonical" href="https://tarekja.github.io/privacy.html">
-  <link rel="icon" href="favicon.ico">
-  <link rel="apple-touch-icon" href="favicon-512.png">
+  <link rel="canonical" href="https://tarekja.github.io/privacy.html" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="favicon-512.png" />
 
-  <meta property="og:title" content="سياسة الخصوصية | حاسبة العمر المباشر">
-  <meta property="og:description" content="تعرف على كيفية تعامل الموقع مع البيانات وملفات تعريف الارتباط.">
-  <meta property="og:url" content="https://tarekja.github.io/privacy.html">
-  <meta property="og:type" content="website">
+  <meta property="og:title" content="Privacy Policy | سياسة الخصوصية | Gizlilik Politikası" />
+  <meta property="og:description" content="تفاصيل الخصوصية، التخزين المحلي، والكوكيز والإعلانات والتحليلات." />
+  <meta property="og:url" content="https://tarekja.github.io/privacy.html" />
+  <meta property="og:type" content="website" />
+
+  <title>Privacy Policy | سياسة الخصوصية</title>
+
+  <!-- Google Analytics (اختياري لكن طبيعي لقياس زيارات صفحة الخصوصية) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZ91MD319E"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FZ91MD319E', { anonymize_ip: true });
+  </script>
 
   <style>
     :root{
@@ -26,6 +37,10 @@
       --accent:#38bdf8;
       --line:#1e293b;
     }
+
+    /* يساعد كثير مع القوائم في الوضع الداكن */
+    :root { color-scheme: dark; }
+
     body{
       font-family: Arial, sans-serif;
       background: var(--bg);
@@ -33,6 +48,7 @@
       margin:0;
       padding:0;
     }
+
     .page{
       min-height:100vh;
       display:flex;
@@ -40,71 +56,112 @@
       align-items:flex-start;
       padding: 18px 10px;
     }
+
     .container{
       width: min(760px, 92vw);
       margin: 0 auto;
     }
+
     .box{
       background: var(--panel);
       padding: 22px;
       border-radius:16px;
       box-shadow:0 0 40px rgba(0,0,0,0.7);
     }
-    h1{
-      margin:0 0 10px 0;
-      font-size:22px;
-      color: var(--accent);
-      text-align:center;
-    }
-    .note{
-      text-align:center;
-      color: var(--muted);
-      font-size: 13px;
-      margin: 0 0 18px 0;
-      line-height: 1.6;
-    }
-    h2{
-      font-size:16px;
-      margin: 18px 0 8px 0;
-      color: var(--text);
-    }
-    p, li{
-      color: var(--muted);
-      line-height: 1.9;
-      font-size: 14px;
-      margin: 0 0 10px 0;
-    }
-    ul{
-      margin: 0 0 10px 0;
-      padding: 0 18px 0 0;
-    }
-    .card{
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 12px 14px;
-      background: rgba(2,6,23,0.4);
-      margin-top: 10px;
-    }
-    a{ color: var(--accent); text-decoration:none; }
-    a:hover{ text-decoration:underline; }
-    .footer{
-      margin-top: 16px;
-      padding-top: 12px;
-      border-top: 1px solid var(--line);
+
+    .topbar{
       display:flex;
       justify-content:space-between;
-      flex-wrap:wrap;
-      gap: 10px;
+      align-items:center;
+      gap:10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .lang-wrap{
+      display:flex;
+      align-items:center;
+      gap:8px;
       color: var(--muted);
       font-size: 13px;
     }
-    .badge{
-      display:inline-block;
-      padding: 2px 10px;
+
+    /* ===== Fix dropdown readability ===== */
+    select{
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
       border: 1px solid var(--line);
-      border-radius: 999px;
+      border-radius: 10px;
+      padding: 8px 10px;
+      outline:none;
+      cursor:pointer;
+    }
+    option{
+      background: #0b1220;
+      color: var(--text);
+    }
+
+    .btn{
+      display:inline-block;
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      color: var(--text);
+      text-decoration:none;
+      background: rgba(255,255,255,0.04);
+      font-size: 14px;
+    }
+    .btn:hover{ opacity: 0.92; }
+
+    h1{
+      margin:0 0 10px 0;
+      font-size: 22px;
+      color: var(--accent);
+    }
+
+    .note{
+      margin: 0 0 16px 0;
       color: var(--muted);
-      font-size: 12px;
+      line-height: 1.7;
+      font-size: 13.5px;
+    }
+
+    h2{
+      margin: 16px 0 8px 0;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    ul{
+      margin: 8px 0 0 0;
+      padding-inline-start: 18px;
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    li{ margin: 6px 0; }
+
+    .muted{ color: var(--muted); }
+
+    .divider{
+      height:1px;
+      background: var(--line);
+      margin: 16px 0;
+    }
+
+    .footer{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.8;
+    }
+
+    a{ color: var(--accent); text-decoration:none; }
+    a:hover{ text-decoration: underline; }
+
+    @media (max-width: 420px){
+      .box{ padding: 16px; }
+      h1{ font-size: 20px; }
     }
   </style>
 </head>
@@ -113,72 +170,267 @@
   <div class="page">
     <div class="container">
       <div class="box">
-        <h1>سياسة الخصوصية</h1>
-        <div class="note">
-          هذه السياسة تشرح باختصار كيف يتعامل موقع “حاسبة العمر المباشر” مع البيانات وملفات تعريف الارتباط.
+
+        <div class="topbar">
+          <div class="lang-wrap">
+            <span id="uiLangLabel">اللغة</span>
+            <select id="langSelect" aria-label="Language selector">
+              <option value="ar">العربية</option>
+              <option value="tr">Türkçe</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+
+          <a class="btn" href="/" id="backHome">العودة للرئيسية</a>
         </div>
 
-        <h2>1) نطاق السياسة</h2>
-        <p>
-          تنطبق هذه السياسة على الموقع المتاح على: <a href="https://tarekja.github.io/">https://tarekja.github.io/</a>.
+        <h1 id="pageTitle">سياسة الخصوصية</h1>
+        <p class="note" id="intro">
+          هذه الصفحة توضّح كيف يتم التعامل مع البيانات عند استخدام موقع حاسبة العمر المباشر.
         </p>
 
-        <h2>2) كيف يعمل الموقع</h2>
-        <p>
-          حساب العمر يتم داخل متصفحك مباشرة. لا نطلب إنشاء حساب ولا نرفع تاريخ/وقت الميلاد إلى خادم تابع لنا.
-        </p>
+        <div class="divider"></div>
 
-        <h2>3) البيانات التي قد تُحفظ محليًا على جهازك</h2>
-        <p>
-          لتحسين تجربة الاستخدام، قد يقوم الموقع بتخزين بعض المدخلات اختياريًا داخل جهازك باستخدام <span class="badge">Local Storage</span>
-          مثل: الاسم، تاريخ الميلاد، ووقت الميلاد. هذا التخزين محلي على جهازك ويمكنك مسحه من زر “مسح” داخل الصفحة الرئيسية.
-        </p>
+        <h2 id="s1Title">1) معالجة البيانات داخل المتصفح</h2>
+        <ul id="s1List">
+          <li>الحساب يتم محليًا داخل متصفحك فقط.</li>
+          <li>لا نقوم بطلب معلومات حساسة، ولا يوجد تسجيل حسابات.</li>
+        </ul>
 
-        <h2>4) التحليلات وقياس الاستخدام (Google Analytics)</h2>
-        <p>
-          نستخدم Google Analytics لقياس أداء الموقع وفهم الاستخدام بشكل عام (مثل عدد الزيارات والصفحات الأكثر مشاهدة).
-          قد تجمع هذه الخدمة معلومات تقنية وإحصائية (مثل نوع الجهاز/المتصفح، الصفحات التي تمت زيارتها، وبيانات تقريبية عن الموقع الجغرافي على مستوى المدينة).
-        </p>
-        <div class="card">
-          <p>
-            ملاحظة: إعدادات التحليلات لدينا تهدف لتقليل التعرّف المباشر على المستخدم قدر الإمكان، وقد يتم التعامل مع البيانات وفق سياسات Google.
-          </p>
-        </div>
+        <h2 id="s2Title">2) التخزين المحلي (Local Storage)</h2>
+        <ul id="s2List">
+          <li>قد يتم حفظ الاسم/تاريخ الميلاد/وقت الميلاد محليًا على جهازك لتسهيل الاستخدام.</li>
+          <li>يمكنك حذف هذه البيانات في أي وقت عبر زر “مسح” في الصفحة الرئيسية.</li>
+        </ul>
 
-        <h2>5) الإعلانات (Google AdSense) وملفات تعريف الارتباط</h2>
-        <p>
-          قد نعرض إعلانات عبر Google AdSense. يمكن أن تستخدم جهات الإعلان ملفات تعريف الارتباط (Cookies) أو تقنيات مشابهة
-          لعرض إعلانات أكثر ملاءمة وقياس أدائها، وذلك وفق سياسات Google وسياسة ملفات تعريف الارتباط الخاصة بها.
-        </p>
+        <h2 id="s3Title">3) ملفات تعريف الارتباط والإعلانات</h2>
+        <ul id="s3List">
+          <li>قد يتم عرض إعلانات من جهات خارجية (مثل Google AdSense).</li>
+          <li>قد تستخدم هذه الجهات ملفات تعريف الارتباط (Cookies) أو تقنيات مشابهة لعرض الإعلانات وقياس الأداء.</li>
+          <li>يمكنك التحكم بالكوكيز من إعدادات المتصفح.</li>
+        </ul>
 
-        <h2>6) إدارة الموافقة على ملفات تعريف الارتباط</h2>
-        <p>
-          عند الحاجة، قد يظهر لك إشعار موافقة لإدارة خيارات الخصوصية وملفات تعريف الارتباط. يمكنك اختيار “موافقة” أو “عدم موافقة”
-          أو “إدارة الخيارات” حسب تفضيلاتك.
-        </p>
+        <h2 id="s4Title">4) التحليلات (Analytics)</h2>
+        <ul id="s4List">
+          <li>قد نستخدم Google Analytics لفهم الاستخدام بشكل عام (مثل عدد الزيارات والصفحات).</li>
+          <li>يتم تفعيل إخفاء عنوان IP قدر الإمكان (anonymize IP).</li>
+        </ul>
 
-        <h2>7) مشاركة البيانات مع أطراف ثالثة</h2>
-        <p>
-          لا نقوم ببيع بياناتك. قد تتم معالجة بعض البيانات بواسطة خدمات طرف ثالث تستخدمها المنصة (مثل Google Analytics وGoogle AdSense)
-          وفق سياساتهم الخاصة.
-        </p>
+        <h2 id="s5Title">5) الروابط الخارجية</h2>
+        <ul id="s5List">
+          <li>قد يحتوي الموقع على روابط خارجية (مثل LinkedIn). لا نتحكم بسياسات المواقع الخارجية.</li>
+        </ul>
 
-        <h2>8) روابط خارجية</h2>
-        <p>
-          قد يحتوي الموقع على روابط خارجية (مثل رابط البريد أو LinkedIn). لسنا مسؤولين عن ممارسات الخصوصية في المواقع الخارجية.
-        </p>
+        <h2 id="s6Title">6) التحديثات</h2>
+        <ul id="s6List">
+          <li>قد نقوم بتحديث هذه السياسة عند الحاجة. آخر نسخة تكون دائمًا منشورة هنا.</li>
+        </ul>
 
-        <h2>9) التغييرات على هذه السياسة</h2>
-        <p>
-          قد نقوم بتحديث هذه السياسة عند الحاجة. أي تحديث سيظهر على هذه الصفحة.
-        </p>
+        <div class="divider"></div>
 
         <div class="footer">
-          <div>الصفحة الرئيسية: <a href="https://tarekja.github.io/">حاسبة العمر المباشر</a></div>
-          <div>تواصل: <a href="mailto:tarekjawish89@gmail.com">tarekjawish89@gmail.com</a></div>
+          <div id="contactLine">
+            للتواصل: <a href="mailto:tarekjawish89@gmail.com">tarekjawish89@gmail.com</a>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
+
+  <script>
+    const STORAGE_KEYS = { lang: "lac_lang" };
+
+    const I18N = {
+      ar: {
+        langLabel: "اللغة",
+        backHome: "العودة للرئيسية",
+        title: "سياسة الخصوصية",
+        intro: "هذه الصفحة توضّح كيف يتم التعامل مع البيانات عند استخدام موقع حاسبة العمر المباشر.",
+        s1Title: "1) معالجة البيانات داخل المتصفح",
+        s1List: [
+          "الحساب يتم محليًا داخل متصفحك فقط.",
+          "لا نقوم بطلب معلومات حساسة، ولا يوجد تسجيل حسابات."
+        ],
+        s2Title: "2) التخزين المحلي (Local Storage)",
+        s2List: [
+          "قد يتم حفظ الاسم/تاريخ الميلاد/وقت الميلاد محليًا على جهازك لتسهيل الاستخدام.",
+          "يمكنك حذف هذه البيانات في أي وقت عبر زر “مسح” في الصفحة الرئيسية."
+        ],
+        s3Title: "3) ملفات تعريف الارتباط والإعلانات",
+        s3List: [
+          "قد يتم عرض إعلانات من جهات خارجية (مثل Google AdSense).",
+          "قد تستخدم هذه الجهات ملفات تعريف الارتباط (Cookies) أو تقنيات مشابهة لعرض الإعلانات وقياس الأداء.",
+          "يمكنك التحكم بالكوكيز من إعدادات المتصفح."
+        ],
+        s4Title: "4) التحليلات (Analytics)",
+        s4List: [
+          "قد نستخدم Google Analytics لفهم الاستخدام بشكل عام (مثل عدد الزيارات والصفحات).",
+          "يتم تفعيل إخفاء عنوان IP قدر الإمكان (anonymize IP)."
+        ],
+        s5Title: "5) الروابط الخارجية",
+        s5List: [
+          "قد يحتوي الموقع على روابط خارجية (مثل LinkedIn). لا نتحكم بسياسات المواقع الخارجية."
+        ],
+        s6Title: "6) التحديثات",
+        s6List: [
+          "قد نقوم بتحديث هذه السياسة عند الحاجة. آخر نسخة تكون دائمًا منشورة هنا."
+        ],
+        contact: "للتواصل:"
+      },
+      en: {
+        langLabel: "Language",
+        backHome: "Back to Home",
+        title: "Privacy Policy",
+        intro: "This page explains how data is handled when you use the Live Age Calculator website.",
+        s1Title: "1) In-browser processing",
+        s1List: [
+          "All calculations run locally in your browser.",
+          "We do not request sensitive information and there are no user accounts."
+        ],
+        s2Title: "2) Local Storage",
+        s2List: [
+          "We may store name/birth date/birth time locally on your device to improve convenience.",
+          "You can remove this data anytime using the “Clear” button on the home page."
+        ],
+        s3Title: "3) Cookies & Ads",
+        s3List: [
+          "The site may display third-party ads (e.g., Google AdSense).",
+          "These providers may use cookies or similar technologies to serve and measure ads.",
+          "You can manage cookies via your browser settings."
+        ],
+        s4Title: "4) Analytics",
+        s4List: [
+          "We may use Google Analytics to understand general usage (e.g., visits and page views).",
+          "IP anonymization is enabled where applicable."
+        ],
+        s5Title: "5) External links",
+        s5List: [
+          "The site may include external links (e.g., LinkedIn). We do not control third-party policies."
+        ],
+        s6Title: "6) Updates",
+        s6List: [
+          "We may update this policy when needed. The latest version will always be published here."
+        ],
+        contact: "Contact:"
+      },
+      tr: {
+        langLabel: "Dil",
+        backHome: "Ana sayfaya dön",
+        title: "Gizlilik Politikası",
+        intro: "Bu sayfa, Canlı Yaş Hesaplayıcı sitesini kullanırken verilerin nasıl işlendiğini açıklar.",
+        s1Title: "1) Tarayıcı içinde işlem",
+        s1List: [
+          "Tüm hesaplamalar tarayıcınızda yerel olarak yapılır.",
+          "Hassas bilgi istemeyiz ve kullanıcı hesabı yoktur."
+        ],
+        s2Title: "2) Yerel Depolama (Local Storage)",
+        s2List: [
+          "Kullanımı kolaylaştırmak için isim/doğum tarihi/doğum saati cihazınızda yerel olarak saklanabilir.",
+          "Bu verileri ana sayfadaki “Temizle” düğmesiyle istediğiniz zaman silebilirsiniz."
+        ],
+        s3Title: "3) Çerezler ve Reklamlar",
+        s3List: [
+          "Sitede üçüncü taraf reklamlar gösterilebilir (ör. Google AdSense).",
+          "Bu sağlayıcılar reklam sunumu ve ölçümü için çerezler veya benzer teknolojiler kullanabilir.",
+          "Çerezleri tarayıcı ayarlarınızdan yönetebilirsiniz."
+        ],
+        s4Title: "4) Analitik",
+        s4List: [
+          "Genel kullanımı anlamak için Google Analytics kullanılabilir (örn. ziyaretler ve sayfa görüntülemeleri).",
+          "Uygun olduğunda IP anonimleştirme etkindir."
+        ],
+        s5Title: "5) Harici bağlantılar",
+        s5List: [
+          "Sitede harici bağlantılar olabilir (örn. LinkedIn). Üçüncü taraf politikalarını kontrol etmeyiz."
+        ],
+        s6Title: "6) Güncellemeler",
+        s6List: [
+          "Bu politika gerektiğinde güncellenebilir. En güncel sürüm burada yayınlanır."
+        ],
+        contact: "İletişim:"
+      }
+    };
+
+    const LANG_META = {
+      ar: { dir: "rtl", lang: "ar" },
+      en: { dir: "ltr", lang: "en" },
+      tr: { dir: "ltr", lang: "tr" }
+    };
+
+    function $(id){ return document.getElementById(id); }
+
+    function pickInitialLanguage(){
+      const saved = localStorage.getItem(STORAGE_KEYS.lang);
+      if (saved && I18N[saved]) return saved;
+
+      const urlLang = new URLSearchParams(window.location.search).get("lang");
+      if (urlLang && I18N[urlLang]) return urlLang;
+
+      const langs = (navigator.languages && navigator.languages.length)
+        ? navigator.languages
+        : [navigator.language || "en"];
+
+      const lc = langs.map(x => String(x).toLowerCase());
+      if (lc.some(x => x.startsWith("ar"))) return "ar";
+      if (lc.some(x => x.startsWith("tr"))) return "tr";
+      return "en";
+    }
+
+    function fillList(elId, items){
+      const ul = $(elId);
+      ul.innerHTML = "";
+      items.forEach(txt => {
+        const li = document.createElement("li");
+        li.textContent = txt;
+        ul.appendChild(li);
+      });
+    }
+
+    function setLanguage(lang){
+      if (!I18N[lang]) lang = "ar";
+      localStorage.setItem(STORAGE_KEYS.lang, lang);
+
+      document.documentElement.lang = LANG_META[lang].lang;
+      document.documentElement.dir = LANG_META[lang].dir;
+
+      const t = I18N[lang];
+
+      $("uiLangLabel").textContent = t.langLabel;
+      $("backHome").textContent = t.backHome;
+      $("pageTitle").textContent = t.title;
+      $("intro").textContent = t.intro;
+
+      $("s1Title").textContent = t.s1Title;
+      fillList("s1List", t.s1List);
+
+      $("s2Title").textContent = t.s2Title;
+      fillList("s2List", t.s2List);
+
+      $("s3Title").textContent = t.s3Title;
+      fillList("s3List", t.s3List);
+
+      $("s4Title").textContent = t.s4Title;
+      fillList("s4List", t.s4List);
+
+      $("s5Title").textContent = t.s5Title;
+      fillList("s5List", t.s5List);
+
+      $("s6Title").textContent = t.s6Title;
+      fillList("s6List", t.s6List);
+
+      $("contactLine").innerHTML = `${t.contact} <a href="mailto:tarekjawish89@gmail.com">tarekjawish89@gmail.com</a>`;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const lang = pickInitialLanguage();
+      $("langSelect").value = lang;
+      setLanguage(lang);
+
+      $("langSelect").addEventListener("change", (e) => {
+        setLanguage(e.target.value);
+      });
+    });
+  </script>
 </body>
 </html>
