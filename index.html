@@ -42,6 +42,9 @@
       --muted:#94a3b8;
       --accent:#38bdf8;
       --line:#1e293b;
+
+      /* مهم حتى المتصفح يرسم عناصر الفورم كـ Dark */
+      color-scheme: dark;
     }
 
     body{
@@ -88,6 +91,7 @@
       font-size: 13px;
     }
 
+    /* ===== Fix dropdown text visibility ===== */
     select{
       background: rgba(255,255,255,0.06);
       color: var(--text);
@@ -96,6 +100,15 @@
       padding: 8px 10px;
       outline:none;
       cursor:pointer;
+    }
+    option{
+      background: #0b1220;
+      color: var(--text);
+    }
+    /* لبعض المتصفحات/الويندوز: تحسين القراءة عند الاختيار */
+    select:focus{
+      box-shadow: 0 0 0 3px rgba(56,189,248,0.12);
+      border-color: rgba(56,189,248,0.5);
     }
 
     h1{
@@ -137,6 +150,8 @@
       outline: none;
       font-size:14px;
       box-sizing: border-box;
+      background: #ffffff;
+      color: #0b1220;
     }
     input:focus{
       border-color: rgba(56,189,248,0.5);
@@ -296,7 +311,7 @@
           <div>
             <span id="usefulLinks">روابط مفيدة:</span>
             <a href="#about" onclick="openDetails('about')" id="lnkAbout">من نحن</a> ·
-            <a href="/privacy.html" id="lnkPrivacy">سياسة الخصوصية</a> ·
+            <a href="privacy.html" id="lnkPrivacy">سياسة الخصوصية</a> ·
             <a href="#contact" onclick="openDetails('contact')" id="lnkContact">تواصل</a>
           </div>
 
@@ -512,7 +527,6 @@
       currentLang = lang;
       localStorage.setItem(STORAGE_KEYS.lang, lang);
 
-      // html lang/dir
       document.documentElement.lang = LANG_META[lang].lang;
       document.documentElement.dir = LANG_META[lang].dir;
 
@@ -520,11 +534,9 @@
 
       $("uiLangLabel").textContent = t.langLabel;
 
-      // Main titles/text
       $("title").textContent = t.titleBase;
       $("subnote").innerHTML = t.subnote;
 
-      // Labels + placeholders + hints
       $("lblName").textContent = t.lblName;
       $("name").placeholder = t.phName;
       $("hintName").textContent = t.hintName;
@@ -535,11 +547,9 @@
       $("lblBirthTime").textContent = t.lblBirthTime;
       $("hintBirthTime").innerHTML = t.hintBirthTime;
 
-      // Buttons
       $("btnStart").textContent = t.btnStart;
       $("btnReset").textContent = t.btnReset;
 
-      // Rows
       $("rYears").textContent = t.rYears;
       $("rMonths").textContent = t.rMonths;
       $("rWeeks").textContent = t.rWeeks;
@@ -548,7 +558,6 @@
       $("rMinutes").textContent = t.rMinutes;
       $("rSeconds").textContent = t.rSeconds;
 
-      // Footer links + details
       $("usefulLinks").textContent = t.usefulLinks;
       $("lnkAbout").textContent = t.lnkAbout;
       $("lnkPrivacy").textContent = t.lnkPrivacy;
@@ -566,7 +575,6 @@
       $("cLinkedLbl").textContent = t.cLinkedLbl;
       $("cLinkedText").textContent = t.cLinkedText;
 
-      // Update time preview and title (if running)
       updateTimePreview();
       updateDynamicTitle();
     }
@@ -608,7 +616,6 @@
       preview.textContent = `${timeVal} = ${hh12}:${mm2} ${ampm}`;
     }
 
-    // ====== App logic ======
     function buildLocalDate(dateStr, timeStr){
       const parts = (dateStr || "").split("-").map(Number);
       if (parts.length !== 3 || parts.some(Number.isNaN)) return null;
@@ -643,13 +650,12 @@
       localStorage.removeItem(STORAGE_KEYS.time);
 
       updateTimePreview();
-      setLanguage(currentLang); // يعيد عنوان الصفحة للوضع الطبيعي
+      setLanguage(currentLang);
     }
 
     function start(){
       const t = I18N[currentLang];
 
-      const name = ($("name").value || "").trim();
       const date = $("birthDate").value;
       const time = $("birthTime").value || "00:00:00";
 
@@ -704,14 +710,11 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      // منع اختيار تاريخ مستقبلي
       const today = new Date().toISOString().split("T")[0];
       $("birthDate").setAttribute("max", today);
 
-      // Restore inputs
       restoreInputs();
 
-      // Language
       currentLang = pickInitialLanguage();
       $("langSelect").value = currentLang;
       setLanguage(currentLang);
@@ -720,11 +723,9 @@
         setLanguage(e.target.value);
       });
 
-      // Time preview
       updateTimePreview();
       $("birthTime").addEventListener("input", updateTimePreview);
 
-      // Auto-save
       ["name","birthDate","birthTime"].forEach(id => {
         $(id).addEventListener("input", () => {
           saveInputs();
@@ -732,7 +733,6 @@
         });
       });
 
-      // Auto-start
       if ($("birthDate").value) {
         start();
       }
