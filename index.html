@@ -42,8 +42,6 @@
       --muted:#94a3b8;
       --accent:#38bdf8;
       --line:#1e293b;
-
-      /* يحسن ألوان عناصر الفورم في الوضع الداكن */
       color-scheme: dark;
     }
 
@@ -218,6 +216,8 @@
       text-align: right;
       flex: 1;
     }
+
+    /* زر أيقونة فقط */
     .share-icon-btn{
       width:44px; height:44px;
       border-radius:12px;
@@ -225,10 +225,16 @@
       background: rgba(255,255,255,0.06);
       color: var(--text);
       cursor:pointer;
-      font-size:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       flex: 0 0 auto;
     }
     .share-icon-btn:hover{ opacity:0.92; }
+    .share-icon-btn svg{
+      width:22px; height:22px;
+      display:block;
+    }
 
     .share-grid{
       display:grid;
@@ -250,13 +256,6 @@
       font-size:14px;
     }
     .share-btn:hover{ opacity:0.92; }
-
-    .share-note{
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-    }
 
     .footer{
       margin-top: 16px;
@@ -359,11 +358,17 @@
           <div class="row"><div class="label" id="rSeconds">الثواني</div><div class="value" id="seconds"></div></div>
         </div>
 
-        <!-- ===== مشاركة (زر واحد + fallback) ===== -->
+        <!-- ===== مشاركة (زر أيقونة + fallback) ===== -->
         <div class="share" id="shareBox">
           <div class="share-row">
             <div class="share-title" id="shareTitle">شارك التجربة مع أصدقائك</div>
-            <button class="share-icon-btn" id="btnShareNative" type="button" aria-label="Share">⤴︎</button>
+
+            <!-- أيقونة مشاركة "3 نقاط متصلة" -->
+            <button class="share-icon-btn" id="btnShareNative" type="button" aria-label="Share">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M18 8a3 3 0 1 0-2.83-4H15a3 3 0 0 0 .17 1l-7.3 4.02A3 3 0 0 0 6 8a3 3 0 1 0 2.04 5.2l7.13 3.92A3 3 0 0 0 15 18a3 3 0 1 0 1.15-2.32l-7.2-3.96a3.1 3.1 0 0 0 0-1.44l7.25-3.99A3 3 0 0 0 18 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
           </div>
 
           <!-- Fallback يظهر فقط إذا المشاركة غير مدعومة أو فشلت -->
@@ -373,8 +378,6 @@
             <a class="share-btn" id="btnShareMore" href="#" role="button">مشاركة</a>
             <a class="share-btn" id="btnShareX" target="_blank" rel="noopener noreferrer">X</a>
           </div>
-
-          <div class="share-note" id="shareNote">سيتم مشاركة رابط الموقع فقط (بدون إرسال أي بيانات شخصية).</div>
         </div>
 
         <div class="footer">
@@ -446,7 +449,6 @@
       $("birthTime").value = localStorage.getItem(STORAGE_KEYS.time) || "";
     }
 
-    // ====== I18N ======
     const I18N = {
       ar: {
         langLabel: "اللغة",
@@ -487,7 +489,6 @@
         timeEmpty: `سيتم اعتبار الوقت <b>00:00:00</b> إذا تركته فارغًا.`,
         titleFor: (name) => `العمر المباشر لـ ${name}`,
         shareTitle: "شارك التجربة مع أصدقائك",
-        shareNote: "سيتم مشاركة رابط الموقع فقط (بدون إرسال أي بيانات شخصية).",
         shareMore: "مشاركة",
         shareText: "جرّب حاسبة العمر المباشر:"
       },
@@ -529,8 +530,7 @@
         alertFuture: "Birth date/time cannot be in the future",
         timeEmpty: `If left empty, time will be set to <b>00:00:00</b>.`,
         titleFor: (name) => `Live age for ${name}`,
-        shareTitle: "Share this with friends",
-        shareNote: "Only the site link will be shared (no personal data).",
+        shareTitle: "Share with friends",
         shareMore: "Share",
         shareText: "Try the Live Age Calculator:"
       },
@@ -573,7 +573,6 @@
         timeEmpty: `Boş bırakılırsa saat <b>00:00:00</b> kabul edilir.`,
         titleFor: (name) => `${name} için canlı yaş`,
         shareTitle: "Arkadaşlarınla paylaş",
-        shareNote: "Sadece site bağlantısı paylaşılır (kişisel veri yok).",
         shareMore: "Paylaş",
         shareText: "Canlı Yaş Hesaplayıcıyı dene:"
       }
@@ -609,19 +608,16 @@
       currentLang = lang;
       localStorage.setItem(STORAGE_KEYS.lang, lang);
 
-      // html lang/dir
       document.documentElement.lang = LANG_META[lang].lang;
-      document.documentElement.dir = LANG_META[lang].dir;
+      document.documentElement.dir  = LANG_META[lang].dir;
 
       const t = I18N[lang];
 
       $("uiLangLabel").textContent = t.langLabel;
 
-      // Main titles/text
       $("title").textContent = t.titleBase;
       $("subnote").innerHTML = t.subnote;
 
-      // Labels + placeholders + hints
       $("lblName").textContent = t.lblName;
       $("name").placeholder = t.phName;
       $("hintName").textContent = t.hintName;
@@ -632,11 +628,9 @@
       $("lblBirthTime").textContent = t.lblBirthTime;
       $("hintBirthTime").innerHTML = t.hintBirthTime;
 
-      // Buttons
       $("btnStart").textContent = t.btnStart;
       $("btnReset").textContent = t.btnReset;
 
-      // Rows
       $("rYears").textContent = t.rYears;
       $("rMonths").textContent = t.rMonths;
       $("rWeeks").textContent = t.rWeeks;
@@ -645,7 +639,6 @@
       $("rMinutes").textContent = t.rMinutes;
       $("rSeconds").textContent = t.rSeconds;
 
-      // Footer links + details
       $("usefulLinks").textContent = t.usefulLinks;
       $("lnkAbout").textContent = t.lnkAbout;
       $("lnkPrivacy").textContent = t.lnkPrivacy;
@@ -663,12 +656,9 @@
       $("cLinkedLbl").textContent = t.cLinkedLbl;
       $("cLinkedText").textContent = t.cLinkedText;
 
-      // Share texts
       $("shareTitle").textContent = t.shareTitle;
-      $("shareNote").textContent = t.shareNote;
       $("btnShareMore").textContent = t.shareMore;
 
-      // Update time preview + share links + title
       updateTimePreview();
       updateShareLinks();
       updateDynamicTitle();
@@ -711,9 +701,7 @@
       preview.textContent = `${timeVal} = ${hh12}:${mm2} ${ampm}`;
     }
 
-    // ===== مشاركة =====
     function buildShareUrl(){
-      // يُبقي المشاركة على الصفحة الرئيسية دائماً
       const u = new URL(window.location.href);
       u.hash = "";
       u.search = "";
@@ -726,24 +714,15 @@
       const t = I18N[currentLang];
       const shareText = `${t.shareText} ${url}`;
 
-      // WhatsApp / Facebook / X
       $("btnShareWhatsApp").href = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
       $("btnShareFacebook").href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
       $("btnShareX").href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(t.shareText)}&url=${encodeURIComponent(url)}`;
 
-      // زر "مشاركة" (fallback بسيط) => ينسخ الرابط
       $("btnShareMore").onclick = async (e) => {
         e.preventDefault();
         try{
           await navigator.clipboard.writeText(url);
-          // إشعار بسيط بدون إزعاج
-          const old = $("shareNote").textContent;
-          $("shareNote").textContent = (currentLang === "ar") ? "تم نسخ الرابط." :
-                                       (currentLang === "tr") ? "Bağlantı kopyalandı." :
-                                       "Link copied.";
-          setTimeout(() => { $("shareNote").textContent = old; }, 1500);
         }catch(_){
-          // إذا فشل النسخ، افتح الرابط
           window.open(url, "_blank", "noopener,noreferrer");
         }
       };
@@ -770,18 +749,14 @@
               url
             });
             return;
-          }catch(_){
-            // المستخدم ألغى أو فشل
-          }
+          }catch(_){}
         }
 
-        // fallback
         fallback.style.display = "grid";
         fallback.scrollIntoView({ behavior: "smooth", block: "center" });
       });
     }
 
-    // ====== App logic ======
     function buildLocalDate(dateStr, timeStr){
       const parts = (dateStr || "").split("-").map(Number);
       if (parts.length !== 3 || parts.some(Number.isNaN)) return null;
@@ -881,7 +856,6 @@
 
       restoreInputs();
 
-      // Language init
       currentLang = pickInitialLanguage();
       $("langSelect").value = currentLang;
       setLanguage(currentLang);
@@ -890,15 +864,12 @@
         setLanguage(e.target.value);
       });
 
-      // Share
       updateShareLinks();
       setupNativeShare();
 
-      // Time preview
       updateTimePreview();
       $("birthTime").addEventListener("input", updateTimePreview);
 
-      // Auto-save
       ["name","birthDate","birthTime"].forEach(id => {
         $(id).addEventListener("input", () => {
           saveInputs();
@@ -906,7 +877,6 @@
         });
       });
 
-      // Auto-start
       if ($("birthDate").value) {
         start();
       }
