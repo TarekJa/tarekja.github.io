@@ -217,7 +217,6 @@
       flex: 1;
     }
 
-    /* زر أيقونة فقط */
     .share-icon-btn{
       width:44px; height:44px;
       border-radius:12px;
@@ -231,10 +230,7 @@
       flex: 0 0 auto;
     }
     .share-icon-btn:hover{ opacity:0.92; }
-    .share-icon-btn svg{
-      width:22px; height:22px;
-      display:block;
-    }
+    .share-icon-btn svg{ width:22px; height:22px; display:block; }
 
     .share-grid{
       display:grid;
@@ -254,6 +250,7 @@
       text-decoration:none;
       cursor:pointer;
       font-size:14px;
+      user-select:none;
     }
     .share-btn:hover{ opacity:0.92; }
 
@@ -358,20 +355,20 @@
           <div class="row"><div class="label" id="rSeconds">الثواني</div><div class="value" id="seconds"></div></div>
         </div>
 
-        <!-- ===== مشاركة (زر أيقونة + fallback) ===== -->
+        <!-- ===== مشاركة (أيقونة فقط + fallback عند الضغط فقط) ===== -->
         <div class="share" id="shareBox">
           <div class="share-row">
             <div class="share-title" id="shareTitle">شارك التجربة مع أصدقائك</div>
 
-            <!-- أيقونة مشاركة "3 نقاط متصلة" -->
             <button class="share-icon-btn" id="btnShareNative" type="button" aria-label="Share">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M18 8a3 3 0 1 0-2.83-4H15a3 3 0 0 0 .17 1l-7.3 4.02A3 3 0 0 0 6 8a3 3 0 1 0 2.04 5.2l7.13 3.92A3 3 0 0 0 15 18a3 3 0 1 0 1.15-2.32l-7.2-3.96a3.1 3.1 0 0 0 0-1.44l7.25-3.99A3 3 0 0 0 18 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18 8a3 3 0 1 0-2.83-4H15a3 3 0 0 0 .17 1l-7.3 4.02A3 3 0 0 0 6 8a3 3 0 1 0 2.04 5.2l7.13 3.92A3 3 0 0 0 15 18a3 3 0 1 0 1.15-2.32l-7.2-3.96a3.1 3.1 0 0 0 0-1.44l7.25-3.99A3 3 0 0 0 18 8Z"
+                  stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
           </div>
 
-          <!-- Fallback يظهر فقط إذا المشاركة غير مدعومة أو فشلت -->
+          <!-- Fallback: مخفي دائماً إلا عند الضغط -->
           <div class="share-grid" id="shareFallback" style="display:none;">
             <a class="share-btn" id="btnShareFacebook" target="_blank" rel="noopener noreferrer">Facebook</a>
             <a class="share-btn" id="btnShareWhatsApp" target="_blank" rel="noopener noreferrer">WhatsApp</a>
@@ -490,7 +487,7 @@
         titleFor: (name) => `العمر المباشر لـ ${name}`,
         shareTitle: "شارك التجربة مع أصدقائك",
         shareMore: "مشاركة",
-        shareText: "جرّب حاسبة العمر المباشر:"
+        shareMessage: "جرّب إدخال مواليدك واحسب عمرك المباشر بالثواني والدقائق والساعات — تجربة ممتعة وسريعة."
       },
       en: {
         langLabel: "Language",
@@ -532,7 +529,7 @@
         titleFor: (name) => `Live age for ${name}`,
         shareTitle: "Share with friends",
         shareMore: "Share",
-        shareText: "Try the Live Age Calculator:"
+        shareMessage: "Try this Live Age Calculator: enter your birth date/time and watch your age update every second."
       },
       tr: {
         langLabel: "Dil",
@@ -574,7 +571,7 @@
         titleFor: (name) => `${name} için canlı yaş`,
         shareTitle: "Arkadaşlarınla paylaş",
         shareMore: "Paylaş",
-        shareText: "Canlı Yaş Hesaplayıcıyı dene:"
+        shareMessage: "Bu Canlı Yaş Hesaplayıcıyı dene: doğum tarihini/saatini gir ve yaşının her saniye güncellendiğini gör."
       }
     };
 
@@ -701,6 +698,7 @@
       preview.textContent = `${timeVal} = ${hh12}:${mm2} ${ampm}`;
     }
 
+    // ===== Share helpers =====
     function buildShareUrl(){
       const u = new URL(window.location.href);
       u.hash = "";
@@ -709,54 +707,110 @@
       return u.toString();
     }
 
-    function updateShareLinks(){
+    function getSharePayload(){
       const url = buildShareUrl();
       const t = I18N[currentLang];
-      const shareText = `${t.shareText} ${url}`;
+      return {
+        url,
+        title: document.title || t.titleBase,
+        text: t.shareMessage,
+        fullText: `${t.shareMessage} ${url}`
+      };
+    }
 
-      $("btnShareWhatsApp").href = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
-      $("btnShareFacebook").href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-      $("btnShareX").href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(t.shareText)}&url=${encodeURIComponent(url)}`;
+    function updateShareLinks(){
+      const p = getSharePayload();
 
+      // WhatsApp: نص + رابط
+      $("btnShareWhatsApp").href = `https://wa.me/?text=${encodeURIComponent(p.fullText)}`;
+
+      // Facebook: غالباً يهتم بالرابط فقط
+      $("btnShareFacebook").href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(p.url)}`;
+
+      // X: نص + رابط
+      $("btnShareX").href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(p.text)}&url=${encodeURIComponent(p.url)}`;
+
+      // "مشاركة" (Fallback): ينسخ نص + رابط
       $("btnShareMore").onclick = async (e) => {
         e.preventDefault();
         try{
-          await navigator.clipboard.writeText(url);
+          await navigator.clipboard.writeText(p.fullText);
         }catch(_){
-          window.open(url, "_blank", "noopener,noreferrer");
+          // fallback بسيط إذا clipboard غير متاح
+          window.open(p.url, "_blank", "noopener,noreferrer");
         }
       };
     }
 
-    function setupNativeShare(){
-      const nativeBtn = $("btnShareNative");
-      const fallback = $("shareFallback");
+    // ===== Share UI behavior =====
+    let fallbackOpen = false;
 
-      const canNative = !!(navigator.share && typeof navigator.share === "function");
-      if (!canNative){
-        fallback.style.display = "grid";
+    function closeFallback(){
+      const fb = $("shareFallback");
+      if (!fb) return;
+      fb.style.display = "none";
+      fallbackOpen = false;
+    }
+
+    function toggleFallback(){
+      const fb = $("shareFallback");
+      if (!fb) return;
+
+      if (fallbackOpen){
+        closeFallback();
+        return;
       }
 
-      nativeBtn.addEventListener("click", async () => {
-        const url = buildShareUrl();
-        const t = I18N[currentLang];
+      fb.style.display = "grid";
+      fallbackOpen = true;
+      fb.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
 
-        if (navigator.share){
+    function setupShareButton(){
+      const nativeBtn = $("btnShareNative");
+      const shareBox = $("shareBox");
+
+      // لا نعرض fallback تلقائياً أبداً
+      closeFallback();
+
+      // ضغط على أيقونة المشاركة
+      nativeBtn.addEventListener("click", async (e) => {
+        e.stopPropagation();
+
+        const p = getSharePayload();
+
+        // جرّب Web Share أولاً (إذا مدعوم)
+        if (navigator.share && typeof navigator.share === "function"){
           try{
-            await navigator.share({
-              title: document.title || t.titleBase,
-              text: t.shareText,
-              url
-            });
+            await navigator.share({ title: p.title, text: p.text, url: p.url });
+            closeFallback();
             return;
-          }catch(_){}
+          }catch(_){
+            // المستخدم ممكن يلغّي أو يفشل على بعض الأجهزة
+          }
         }
 
-        fallback.style.display = "grid";
-        fallback.scrollIntoView({ behavior: "smooth", block: "center" });
+        // إذا غير مدعوم أو فشل => toggle fallback
+        toggleFallback();
+      });
+
+      // منع إغلاق الفولباك عند الضغط داخله
+      shareBox.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+
+      // إغلاق عند الضغط خارج صندوق المشاركة
+      document.addEventListener("click", () => {
+        if (fallbackOpen) closeFallback();
+      });
+
+      // إغلاق عند الضغط Esc
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && fallbackOpen) closeFallback();
       });
     }
 
+    // ===== App logic =====
     function buildLocalDate(dateStr, timeStr){
       const parts = (dateStr || "").split("-").map(Number);
       if (parts.length !== 3 || parts.some(Number.isNaN)) return null;
@@ -789,6 +843,8 @@
       localStorage.removeItem(STORAGE_KEYS.name);
       localStorage.removeItem(STORAGE_KEYS.date);
       localStorage.removeItem(STORAGE_KEYS.time);
+
+      closeFallback();
 
       updateTimePreview();
       setLanguage(currentLang);
@@ -862,10 +918,11 @@
 
       $("langSelect").addEventListener("change", (e) => {
         setLanguage(e.target.value);
+        updateShareLinks();
       });
 
       updateShareLinks();
-      setupNativeShare();
+      setupShareButton();
 
       updateTimePreview();
       $("birthTime").addEventListener("input", updateTimePreview);
