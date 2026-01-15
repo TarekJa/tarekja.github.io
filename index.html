@@ -91,16 +91,27 @@
       font-size: 13px;
     }
 
-    select{
+    /* زر تغيير اللغة (ضغطة = تبديل فوري) */
+    .lang-btn{
       background: rgba(255,255,255,0.06);
       color: var(--text);
       border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 8px 10px;
+      border-radius: 999px;
+      padding: 8px 12px;
       outline:none;
       cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
     }
-    option{ background: var(--chip); color: var(--text); }
+    .lang-btn:hover{ opacity:0.95; }
+    .lang-dot{
+      width:8px; height:8px;
+      border-radius:999px;
+      background: var(--accent);
+      opacity:0.9;
+    }
 
     h1{
       text-align:center;
@@ -116,11 +127,6 @@
       font-size: 13px;
       margin: 0 0 14px 0;
       line-height: 1.55;
-    }
-
-    .grid{
-      display:grid;
-      gap: 12px;
     }
 
     .field{ margin-bottom: 12px; }
@@ -249,7 +255,7 @@
       direction:ltr;
       white-space: nowrap;
     }
-    html[dir="rtl"] .value{ text-align:left; } /* keep numbers LTR */
+    html[dir="rtl"] .value{ text-align:left; }
 
     .footer{
       margin-top: 14px;
@@ -280,7 +286,7 @@
       font-weight: normal;
     }
 
-    /* Share panel fallback */
+    /* Share panel fallback modal */
     .modal{
       position: fixed;
       inset: 0;
@@ -335,21 +341,8 @@
       font-size: 14px;
     }
     .share-chip:hover{ opacity:0.95; }
-    .copybox{
-      margin-top: 10px;
-      display:flex;
-      gap: 10px;
-    }
-    .copybox input{
-      background: rgba(255,255,255,0.95);
-      color:#0b1220;
-    }
-    .toast{
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 12.5px;
-      min-height: 18px;
-    }
+    .copybox{ margin-top: 10px; display:flex; gap: 10px; }
+    .toast{ margin-top: 10px; color: var(--muted); font-size: 12.5px; min-height: 18px; }
 
     @media (max-width: 420px){
       .box{ padding: 16px; }
@@ -367,11 +360,10 @@
         <div class="topbar">
           <div class="lang-wrap">
             <span id="uiLangLabel">اللغة</span>
-            <select id="langSelect" aria-label="Language selector">
-              <option value="ar">العربية</option>
-              <option value="tr">Türkçe</option>
-              <option value="en">English</option>
-            </select>
+            <button class="lang-btn" id="langBtn" type="button" onclick="cycleLanguage()" aria-label="Change language">
+              <span class="lang-dot" aria-hidden="true"></span>
+              <span id="langBtnText">العربية</span>
+            </button>
           </div>
         </div>
 
@@ -421,7 +413,7 @@
         <div class="section" id="liveSection" style="display:none;">
           <div class="section-title">
             <span id="liveTitle">عمرك الآن</span>
-            <span class="badge" id="tzBadge">(TR)</span>
+            <span class="badge" id="tzBadge">توقيت تركيا</span>
           </div>
           <div class="rows">
             <div class="row"><div class="label" id="rYears">السنوات (تقريب)</div><div class="value" id="years"></div></div>
@@ -438,7 +430,7 @@
         <div class="section" id="bdaySection" style="display:none;">
           <div class="section-title">
             <span id="bdayTitle">عيد ميلادك القادم</span>
-            <span class="badge" id="bdayTzBadge">(TR)</span>
+            <span class="badge" id="bdayTzBadge">توقيت تركيا</span>
           </div>
           <div class="rows">
             <div class="row"><div class="label" id="bdayLeftLbl">باقي لعيد ميلادك القادم:</div><div class="value" id="bdayLeftVal"></div></div>
@@ -577,7 +569,6 @@
     };
 
     function hijriPartsUmmAlQura(date){
-      // Numeric parts (Latin digits) for reliable parsing
       const fmt = new Intl.DateTimeFormat("en-TN-u-ca-islamic-umalqura-nu-latn", {
         year:"numeric", month:"numeric", day:"numeric"
       });
@@ -594,12 +585,8 @@
       const months = HIJRI_MONTHS[lang] || HIJRI_MONTHS.ar;
       const mName = months[(hp.m || 1) - 1] || months[0];
 
-      if (lang === "ar"){
-        return `${hp.d} ${mName} ${hp.y} هـ`;
-      }
-      if (lang === "tr"){
-        return `${hp.d} ${mName} ${hp.y} H`;
-      }
+      if (lang === "ar") return `${hp.d} ${mName} ${hp.y} هـ`;
+      if (lang === "tr") return `${hp.d} ${mName} ${hp.y} H`;
       return `${hp.d} ${mName} ${hp.y} AH`;
     }
 
@@ -609,6 +596,7 @@
     const I18N = {
       ar: {
         langLabel: "اللغة",
+        langBtnText: "العربية",
         titleBase: "حاسبة العمر المباشر",
         subnote: `أدخل تاريخ ووقت الميلاد ثم شاهد العمر يتحدث كل ثانية.<br>(السنوات/الأشهر تقريبية — بينما الأيام/الساعات/الدقائق/الثواني دقيقة)`,
         lblName: "الاسم",
@@ -622,6 +610,7 @@
         btnReset: "مسح",
         shareBtn: "مشاركة",
         shareTitle: "مشاركة",
+        tzLabel: "توقيت تركيا",
         liveTitle: "عمرك الآن",
         rYears: "السنوات (تقريب)",
         rMonths: "الأشهر (تقريب)",
@@ -663,15 +652,13 @@
         alertFuture: "تاريخ/وقت الميلاد لا يمكن أن يكون في المستقبل",
         timeEmpty: `سيتم اعتبار الوقت <b>00:00:00</b> إذا تركته فارغًا.`,
         titleFor: (name) => `العمر المباشر لـ ${name}`,
-        // sharing text (short)
         shareMsg: (hijriBirth) => `جربها جميلة! عمري الآن هون:\nالموافق هجريًا: ${hijriBirth}`,
-        // seasons
         seasons: { winter:"الشتاء", spring:"الربيع", summer:"الصيف", autumn:"الخريف" },
-        // weekdays
         weekday: (date) => new Intl.DateTimeFormat("ar", { weekday:"long" }).format(date),
       },
       en: {
         langLabel: "Language",
+        langBtnText: "English",
         titleBase: "Live Age Calculator",
         subnote: `Enter birth date and time, then watch your age update every second.<br>(Years/months are approximate — days/hours/minutes/seconds are exact)`,
         lblName: "Name",
@@ -685,6 +672,7 @@
         btnReset: "Clear",
         shareBtn: "Share",
         shareTitle: "Share",
+        tzLabel: "Turkey time",
         liveTitle: "Your age now",
         rYears: "Years (approx.)",
         rMonths: "Months (approx.)",
@@ -732,6 +720,7 @@
       },
       tr: {
         langLabel: "Dil",
+        langBtnText: "Türkçe",
         titleBase: "Canlı Yaş Hesaplayıcı",
         subnote: `Doğum tarihi ve saatini girin, yaşınız her saniye güncellensin.<br>(Yıl/ay yaklaşık — gün/saat/dakika/saniye kesin)`,
         lblName: "İsim",
@@ -745,6 +734,7 @@
         btnReset: "Temizle",
         shareBtn: "Paylaş",
         shareTitle: "Paylaş",
+        tzLabel: "Türkiye saati",
         liveTitle: "Şu anki yaşın",
         rYears: "Yıl (yaklaşık)",
         rMonths: "Ay (yaklaşık)",
@@ -817,6 +807,13 @@
       return "en";
     }
 
+    function cycleLanguage(){
+      const order = ["ar","tr","en"];
+      const idx = order.indexOf(currentLang);
+      const next = order[(idx + 1) % order.length];
+      setLanguage(next);
+    }
+
     function setLanguage(lang){
       if (!I18N[lang]) lang = "ar";
       currentLang = lang;
@@ -828,6 +825,7 @@
       const t = I18N[lang];
 
       $("uiLangLabel").textContent = t.langLabel;
+      $("langBtnText").textContent = t.langBtnText;
 
       $("title").textContent = t.titleBase;
       $("subnote").innerHTML = t.subnote;
@@ -847,6 +845,9 @@
 
       $("shareBtnText").textContent = t.shareBtn;
       $("shareModalTitle").textContent = t.shareTitle;
+
+      $("tzBadge").textContent = t.tzLabel;
+      $("bdayTzBadge").textContent = t.tzLabel;
 
       $("liveTitle").textContent = t.liveTitle;
       $("rYears").textContent = t.rYears;
@@ -892,7 +893,6 @@
       $("cLinkedLbl").textContent = t.cLinkedLbl;
       $("cLinkedText").textContent = t.cLinkedText;
 
-      // Update derived UI
       updateTimePreview();
       updateDynamicTitle();
       refreshComputedSections();
@@ -996,19 +996,13 @@
 
     // Hijri-age calculation (month-stepping using Umm al-Qura via Intl)
     function nextHijriMonthSameDay(currentDate, desiredDay){
-      // Find first day of next Hijri month by scanning forward
       const startParts = hijriPartsUmmAlQura(currentDate);
       let d = new Date(currentDate.getTime());
-
-      // Move to next day to avoid staying in same month/day
       d.setDate(d.getDate() + 1);
 
-      // Find when hijri day becomes 1 AND month differs from start month
       for (let i=0; i<40; i++){
         const p = hijriPartsUmmAlQura(d);
         if (p.m !== startParts.m && p.d === 1){
-          // we are at first day of next hijri month
-          // Now determine this month length by finding next month day1
           let monthStart = new Date(d.getTime());
           let monthEndStart = null;
           let e = new Date(d.getTime());
@@ -1039,7 +1033,6 @@
       let cursor = new Date(birthDate.getTime());
       let months = 0;
 
-      // Count full hijri months until next month would exceed now
       for (let guard=0; guard<2000; guard++){
         const next = nextHijriMonthSameDay(cursor, desiredDay);
         if (!next) break;
@@ -1053,10 +1046,7 @@
 
       const years = Math.floor(months / 12);
       const remMonths = months % 12;
-
-      // Remaining days as actual days between cursor and now
       const remDays = Math.floor((nowDate.getTime() - cursor.getTime()) / 86400000);
-
       return { years, months: remMonths, days: remDays };
     }
 
@@ -1065,7 +1055,6 @@
     }
 
     function formatDateTimeTR(date){
-      // display as Istanbul time, but without complex tz math in calculations
       return new Intl.DateTimeFormat(currentLang === "ar" ? "ar" : currentLang, {
         timeZone: "Europe/Istanbul",
         weekday:"long",
@@ -1075,8 +1064,6 @@
     }
 
     function seasonFromMonth(monthIndex0){
-      // Northern hemisphere (Turkey/Syria)
-      // Winter: Dec-Feb, Spring: Mar-May, Summer: Jun-Aug, Autumn: Sep-Nov
       const m = monthIndex0 + 1;
       const t = I18N[currentLang];
       if (m === 12 || m === 1 || m === 2) return t.seasons.winter;
@@ -1086,7 +1073,6 @@
     }
 
     function zodiacSign(month, day){
-      // Western zodiac boundaries
       const signs = {
         ar: ["الجدي","الدلو","الحوت","الحمل","الثور","الجوزاء","السرطان","الأسد","العذراء","الميزان","العقرب","القوس"],
         en: ["Capricorn","Aquarius","Pisces","Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius"],
@@ -1094,7 +1080,6 @@
       };
       const s = signs[currentLang] || signs.ar;
 
-      // month/day -> sign
       if ((month==1 && day>=20) || (month==2 && day<=18)) return s[1];
       if ((month==2 && day>=19) || (month==3 && day<=20)) return s[2];
       if ((month==3 && day>=21) || (month==4 && day<=19)) return s[3];
@@ -1106,11 +1091,10 @@
       if ((month==9 && day>=23) || (month==10 && day<=22)) return s[9];
       if ((month==10 && day>=23) || (month==11 && day<=21)) return s[10];
       if ((month==11 && day>=22) || (month==12 && day<=21)) return s[11];
-      return s[0]; // Capricorn
+      return s[0];
     }
 
     function healthySleepText(ageYears){
-      // General guideline text; localized and simple
       if (currentLang === "ar"){
         return (ageYears < 18) ? "الموصى به تقريبًا: 8–10 ساعات" : "الموصى به تقريبًا: 7–9 ساعات";
       }
@@ -1121,18 +1105,16 @@
     }
 
     function refreshComputedSections(){
-      // If results visible, re-render computed text in selected language
       if ($("liveSection").style.display !== "block") return;
-
-      // Re-run non-live calculations
       renderHijriAndMore();
-      renderNextBirthday();
+      renderNextBirthday(); // تحديث مباشر عند تبديل اللغة
     }
+
+    let lastBirthDateForStatic = null;
 
     function start(){
       const t = I18N[currentLang];
 
-      const name = ($("name").value || "").trim();
       const date = $("birthDate").value;
       const time = $("birthTime").value || "00:00:00";
 
@@ -1164,9 +1146,13 @@
 
       if (interval) clearInterval(interval);
 
-      function update(){
-        const now = Date.now();
-        let diffMs = now - birthDate.getTime();
+      // نحسب الأقسام الثقيلة (الهجري/المعلومات) مرة واحدة عند البداية أو عند تغيير المدخلات
+      lastBirthDateForStatic = birthDate.getTime();
+      renderHijriAndMore();
+
+      function updateEverySecond(){
+        const nowMs = Date.now();
+        let diffMs = nowMs - birthDate.getTime();
         if (diffMs < 0) diffMs = 0;
 
         const seconds = Math.floor(diffMs / 1000);
@@ -1185,15 +1171,16 @@
         $("hours").textContent    = formatNumber(hours);
         $("minutes").textContent  = formatNumber(minutes);
         $("seconds").textContent  = formatNumber(seconds);
+
+        // هنا إصلاح عداد عيد الميلاد: يتحدث كل ثانية
+        renderNextBirthday(birthDate);
+
+        // تحديث رابط المشاركة
+        updateShareLink();
       }
 
-      update();
-      interval = setInterval(update, 1000);
-
-      // Render fixed sections (not per second)
-      renderHijriAndMore();
-      renderNextBirthday();
-      updateShareLink();
+      updateEverySecond();
+      interval = setInterval(updateEverySecond, 1000);
     }
 
     function renderHijriAndMore(){
@@ -1202,7 +1189,6 @@
       const birthDate = buildLocalDate(dateStr, timeStr);
       if (!birthDate) return;
 
-      // Hijri birth
       const hb = hijriPartsUmmAlQura(birthDate);
       const months = HIJRI_MONTHS[currentLang] || HIJRI_MONTHS.ar;
       const hbMonthName = months[(hb.m || 1) - 1] || months[0];
@@ -1210,7 +1196,6 @@
       $("hBirthVal").textContent = hijriDateText(birthDate, currentLang);
       $("hMonthVal").textContent = hbMonthName;
 
-      // Hijri age (Umm al-Qura month stepping)
       const now = new Date();
       const ha = computeHijriAge(birthDate, now);
 
@@ -1222,7 +1207,6 @@
         $("hAgeVal").textContent = `${ha.years} years, ${ha.months} months, ${ha.days} days`;
       }
 
-      // More info
       const month = birthDate.getMonth() + 1;
       const day = birthDate.getDate();
 
@@ -1230,26 +1214,23 @@
       $("bornSeasonVal").textContent = seasonFromMonth(birthDate.getMonth());
       $("zodiacVal").textContent = zodiacSign(month, day);
 
-      // Sleep
       const yearsApprox = (Date.now() - birthDate.getTime()) / (1000*60*60*24*365.2425);
       $("sleepVal").textContent = healthySleepText(Math.floor(yearsApprox));
-      $("moreBadge").textContent = ""; // keep clean
+      $("moreBadge").textContent = "";
 
-      // Keep share link updated with Hijri equivalent
       updateShareLink();
     }
 
-    function renderNextBirthday(){
+    function renderNextBirthday(birthDateOverride){
       const dateStr = $("birthDate").value;
       const timeStr = $("birthTime").value || "00:00:00";
-      const birthDate = buildLocalDate(dateStr, timeStr);
+      const birthDate = birthDateOverride || buildLocalDate(dateStr, timeStr);
       if (!birthDate) return;
 
       const now = new Date();
       const bMonth = birthDate.getMonth();
       const bDay = birthDate.getDate();
 
-      // Use user's entered time; if empty already set to 00:00:00
       const tParts = timeStr.split(":").map(Number);
       const hh = tParts[0] ?? 0;
       const mm = tParts[1] ?? 0;
@@ -1263,7 +1244,6 @@
         next = new Date(y, bMonth, bDay, hh, mm, ss);
       }
 
-      // Countdown (simple and stable)
       let diff = next.getTime() - now.getTime();
       if (diff < 0) diff = 0;
 
@@ -1276,7 +1256,6 @@
       const remMinutes = totalMinutes % 60;
       const remSeconds = totalSeconds % 60;
 
-      // months approximation
       const monthsApprox = Math.floor(totalDays / 30);
       const remDays = totalDays % 30;
 
@@ -1318,7 +1297,6 @@
     async function shareResult(){
       updateShareLink();
 
-      // build short message as requested (includes Hijri equivalent of birth date)
       const dateStr = $("birthDate").value;
       const timeStr = $("birthTime").value || "00:00:00";
       const birthDate = buildLocalDate(dateStr, timeStr);
@@ -1330,15 +1308,9 @@
 
       if (navigator.share){
         try{
-          await navigator.share({
-            title: t.titleBase,
-            text: text,
-            url: url
-          });
+          await navigator.share({ title: t.titleBase, text, url });
           return;
-        }catch(e){
-          // user canceled or share failed -> fall back
-        }
+        }catch(e){}
       }
       openShareModal();
     }
@@ -1355,7 +1327,6 @@
     function shareTo(platform){
       const url = encodeURIComponent($("shareLink").value);
 
-      // same short message
       const dateStr = $("birthDate").value;
       const timeStr = $("birthTime").value || "00:00:00";
       const birthDate = buildLocalDate(dateStr, timeStr);
@@ -1369,7 +1340,6 @@
       } else if (platform === "x"){
         shareUrl = `https://twitter.com/intent/tweet?text=${msg}&url=${url}`;
       } else if (platform === "facebook"){
-        // Facebook mainly supports URL; message may be ignored
         shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
       }
       window.open(shareUrl, "_blank", "noopener,noreferrer");
@@ -1385,7 +1355,7 @@
     }
 
     // =========================
-    // URL params support (share link fills inputs)
+    // URL params support
     // =========================
     function applyUrlParams(){
       const p = new URLSearchParams(window.location.search);
@@ -1395,8 +1365,6 @@
       const l = p.get("lang");
 
       if (l && I18N[l]){
-        currentLang = l;
-        $("langSelect").value = l;
         setLanguage(l);
       }
 
@@ -1406,37 +1374,34 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      // prevent selecting future date
       const today = new Date().toISOString().split("T")[0];
       $("birthDate").setAttribute("max", today);
 
-      // restore from storage first
       restoreInputs();
 
-      // language init
-      currentLang = pickInitialLanguage();
-      $("langSelect").value = currentLang;
-      setLanguage(currentLang);
+      const initial = pickInitialLanguage();
+      setLanguage(initial);
 
-      // apply URL params (override)
       applyUrlParams();
 
-      $("langSelect").addEventListener("change", (e) => setLanguage(e.target.value));
-
-      // time preview
       updateTimePreview();
       $("birthTime").addEventListener("input", updateTimePreview);
 
-      // auto-save + title refresh
       ["name","birthDate","birthTime"].forEach(id => {
         $(id).addEventListener("input", () => {
           saveInputs();
           updateDynamicTitle();
           updateShareLink();
+
+          // إذا تغيرت المدخلات بعد التشغيل، نعيد حساب الأقسام الثقيلة مرة واحدة
+          const bd = buildLocalDate($("birthDate").value, $("birthTime").value || "00:00:00");
+          if (bd && bd.getTime() !== lastBirthDateForStatic){
+            lastBirthDateForStatic = bd.getTime();
+            renderHijriAndMore();
+          }
         });
       });
 
-      // auto-start if date exists
       if ($("birthDate").value){
         start();
       }
