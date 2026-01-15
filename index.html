@@ -42,9 +42,8 @@
       --muted:#94a3b8;
       --accent:#38bdf8;
       --line:#1e293b;
-      --chip:#0b1220;
     }
-    :root { color-scheme: dark; }
+    :root{ color-scheme: dark; }
 
     body{
       font-family: Arial, sans-serif;
@@ -91,26 +90,19 @@
       font-size: 13px;
     }
 
-    /* زر تغيير اللغة (ضغطة = تبديل فوري) */
-    .lang-btn{
+    /* Dropdown language styling (fix transparency) */
+    select{
       background: rgba(255,255,255,0.06);
-      color: var(--text);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 8px 12px;
+      color: #e5e7eb;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 8px 10px;
       outline:none;
       cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      user-select:none;
     }
-    .lang-btn:hover{ opacity:0.95; }
-    .lang-dot{
-      width:8px; height:8px;
-      border-radius:999px;
-      background: var(--accent);
-      opacity:0.9;
+    option{
+      background: #0b1220;
+      color: #e5e7eb;
     }
 
     h1{
@@ -233,10 +225,8 @@
       border-radius: 999px;
     }
 
-    .rows{
-      display:grid;
-      gap: 8px;
-    }
+    .rows{ display:grid; gap: 8px; }
+
     .row{
       display:flex;
       justify-content:space-between;
@@ -255,7 +245,13 @@
       direction:ltr;
       white-space: nowrap;
     }
-    html[dir="rtl"] .value{ text-align:left; }
+
+    /* Fix RTL rendering for countdown text in Arabic */
+    .value.rtl{
+      direction: rtl;
+      text-align: right;
+      white-space: normal;
+    }
 
     .footer{
       margin-top: 14px;
@@ -360,10 +356,11 @@
         <div class="topbar">
           <div class="lang-wrap">
             <span id="uiLangLabel">اللغة</span>
-            <button class="lang-btn" id="langBtn" type="button" onclick="cycleLanguage()" aria-label="Change language">
-              <span class="lang-dot" aria-hidden="true"></span>
-              <span id="langBtnText">العربية</span>
-            </button>
+            <select id="langSelect" aria-label="Language selector">
+              <option value="ar">العربية</option>
+              <option value="tr">Türkçe</option>
+              <option value="en">English</option>
+            </select>
           </div>
         </div>
 
@@ -433,7 +430,10 @@
             <span class="badge" id="bdayTzBadge">توقيت تركيا</span>
           </div>
           <div class="rows">
-            <div class="row"><div class="label" id="bdayLeftLbl">باقي لعيد ميلادك القادم:</div><div class="value" id="bdayLeftVal"></div></div>
+            <div class="row">
+              <div class="label" id="bdayLeftLbl">باقي لعيد ميلادك القادم:</div>
+              <div class="value" id="bdayLeftVal"></div>
+            </div>
             <div class="row"><div class="label" id="bdayWillLbl">سيكون عيد ميلادك يوم:</div><div class="value" id="bdayWillVal"></div></div>
             <div class="row"><div class="label" id="bdayHijriLbl">الموافق:</div><div class="value" id="bdayHijriVal"></div></div>
           </div>
@@ -525,9 +525,6 @@
   </div>
 
   <script>
-    // =========================
-    // Storage / helpers
-    // =========================
     let interval = null;
 
     const STORAGE_KEYS = {
@@ -596,7 +593,6 @@
     const I18N = {
       ar: {
         langLabel: "اللغة",
-        langBtnText: "العربية",
         titleBase: "حاسبة العمر المباشر",
         subnote: `أدخل تاريخ ووقت الميلاد ثم شاهد العمر يتحدث كل ثانية.<br>(السنوات/الأشهر تقريبية — بينما الأيام/الساعات/الدقائق/الثواني دقيقة)`,
         lblName: "الاسم",
@@ -655,10 +651,11 @@
         shareMsg: (hijriBirth) => `جربها جميلة! عمري الآن هون:\nالموافق هجريًا: ${hijriBirth}`,
         seasons: { winter:"الشتاء", spring:"الربيع", summer:"الصيف", autumn:"الخريف" },
         weekday: (date) => new Intl.DateTimeFormat("ar", { weekday:"long" }).format(date),
+        countdownUnits: { mo:"شهر", d:"يوم", h:"ساعة", m:"دقيقة", s:"ثانية" },
+        countdownSep: " • "
       },
       en: {
         langLabel: "Language",
-        langBtnText: "English",
         titleBase: "Live Age Calculator",
         subnote: `Enter birth date and time, then watch your age update every second.<br>(Years/months are approximate — days/hours/minutes/seconds are exact)`,
         lblName: "Name",
@@ -717,10 +714,11 @@
         shareMsg: (hijriBirth) => `Try it! My age is live here:\nHijri equivalent: ${hijriBirth}`,
         seasons: { winter:"Winter", spring:"Spring", summer:"Summer", autumn:"Autumn" },
         weekday: (date) => new Intl.DateTimeFormat("en", { weekday:"long" }).format(date),
+        countdownUnits: { mo:"mo", d:"d", h:"h", m:"m", s:"s" },
+        countdownSep: " • "
       },
       tr: {
         langLabel: "Dil",
-        langBtnText: "Türkçe",
         titleBase: "Canlı Yaş Hesaplayıcı",
         subnote: `Doğum tarihi ve saatini girin, yaşınız her saniye güncellensin.<br>(Yıl/ay yaklaşık — gün/saat/dakika/saniye kesin)`,
         lblName: "İsim",
@@ -779,6 +777,8 @@
         shareMsg: (hijriBirth) => `Dene! Yaşım burada canlı:\nHicrî karşılığı: ${hijriBirth}`,
         seasons: { winter:"Kış", spring:"İlkbahar", summer:"Yaz", autumn:"Sonbahar" },
         weekday: (date) => new Intl.DateTimeFormat("tr", { weekday:"long" }).format(date),
+        countdownUnits: { mo:"ay", d:"gün", h:"saat", m:"dk", s:"sn" },
+        countdownSep: " • "
       }
     };
 
@@ -807,13 +807,6 @@
       return "en";
     }
 
-    function cycleLanguage(){
-      const order = ["ar","tr","en"];
-      const idx = order.indexOf(currentLang);
-      const next = order[(idx + 1) % order.length];
-      setLanguage(next);
-    }
-
     function setLanguage(lang){
       if (!I18N[lang]) lang = "ar";
       currentLang = lang;
@@ -822,10 +815,12 @@
       document.documentElement.lang = LANG_META[lang].lang;
       document.documentElement.dir  = LANG_META[lang].dir;
 
+      // keep dropdown in sync
+      if ($("langSelect").value !== lang) $("langSelect").value = lang;
+
       const t = I18N[lang];
 
       $("uiLangLabel").textContent = t.langLabel;
-      $("langBtnText").textContent = t.langBtnText;
 
       $("title").textContent = t.titleBase;
       $("subnote").innerHTML = t.subnote;
@@ -893,6 +888,11 @@
       $("cLinkedLbl").textContent = t.cLinkedLbl;
       $("cLinkedText").textContent = t.cLinkedText;
 
+      // Fix RTL countdown rendering only for Arabic
+      const bdayVal = $("bdayLeftVal");
+      if (lang === "ar") bdayVal.classList.add("rtl");
+      else bdayVal.classList.remove("rtl");
+
       updateTimePreview();
       updateDynamicTitle();
       refreshComputedSections();
@@ -901,7 +901,6 @@
     function updateDynamicTitle(){
       const name = ($("name").value || "").trim();
       const t = I18N[currentLang];
-
       const visible = ($("liveSection").style.display === "block");
       if (!visible){
         $("title").textContent = t.titleBase;
@@ -935,9 +934,6 @@
       preview.textContent = `${timeVal} = ${hh12}:${mm2} ${ampm}`;
     }
 
-    // =========================
-    // Core app logic
-    // =========================
     function buildLocalDate(dateStr, timeStr){
       const parts = (dateStr || "").split("-").map(Number);
       if (parts.length !== 3 || parts.some(Number.isNaN)) return null;
@@ -953,6 +949,82 @@
       if (Number.isNaN(dt.getTime())) return null;
       return dt;
     }
+
+    function formatNumber(n){
+      return Number(n).toLocaleString();
+    }
+
+    function formatCountdown(months, days, hours, minutes, seconds){
+      const t = I18N[currentLang];
+      const u = t.countdownUnits;
+      const sep = t.countdownSep;
+
+      // واضح وممنوع يتكرر بسبب RTL
+      return (
+        `${formatNumber(months)} ${u.mo}` + sep +
+        `${formatNumber(days)} ${u.d}` + sep +
+        `${formatNumber(hours)} ${u.h}` + sep +
+        `${formatNumber(minutes)} ${u.m}` + sep +
+        `${formatNumber(seconds)} ${u.s}`
+      );
+    }
+
+    function formatDateTimeTR(date){
+      return new Intl.DateTimeFormat(currentLang === "ar" ? "ar" : currentLang, {
+        timeZone: "Europe/Istanbul",
+        weekday:"long",
+        year:"numeric", month:"long", day:"numeric",
+        hour:"2-digit", minute:"2-digit"
+      }).format(date);
+    }
+
+    function seasonFromMonth(monthIndex0){
+      const m = monthIndex0 + 1;
+      const t = I18N[currentLang];
+      if (m === 12 || m === 1 || m === 2) return t.seasons.winter;
+      if (m >= 3 && m <= 5) return t.seasons.spring;
+      if (m >= 6 && m <= 8) return t.seasons.summer;
+      return t.seasons.autumn;
+    }
+
+    function zodiacSign(month, day){
+      const signs = {
+        ar: ["الجدي","الدلو","الحوت","الحمل","الثور","الجوزاء","السرطان","الأسد","العذراء","الميزان","العقرب","القوس"],
+        en: ["Capricorn","Aquarius","Pisces","Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius"],
+        tr: ["Oğlak","Kova","Balık","Koç","Boğa","İkizler","Yengeç","Aslan","Başak","Terazi","Akrep","Yay"]
+      };
+      const s = signs[currentLang] || signs.ar;
+      if ((month==1 && day>=20) || (month==2 && day<=18)) return s[1];
+      if ((month==2 && day>=19) || (month==3 && day<=20)) return s[2];
+      if ((month==3 && day>=21) || (month==4 && day<=19)) return s[3];
+      if ((month==4 && day>=20) || (month==5 && day<=20)) return s[4];
+      if ((month==5 && day>=21) || (month==6 && day<=20)) return s[5];
+      if ((month==6 && day>=21) || (month==7 && day<=22)) return s[6];
+      if ((month==7 && day>=23) || (month==8 && day<=22)) return s[7];
+      if ((month==8 && day>=23) || (month==9 && day<=22)) return s[8];
+      if ((month==9 && day>=23) || (month==10 && day<=22)) return s[9];
+      if ((month==10 && day>=23) || (month==11 && day<=21)) return s[10];
+      if ((month==11 && day>=22) || (month==12 && day<=21)) return s[11];
+      return s[0];
+    }
+
+    function healthySleepText(ageYears){
+      if (currentLang === "ar"){
+        return (ageYears < 18) ? "الموصى به تقريبًا: 8–10 ساعات" : "الموصى به تقريبًا: 7–9 ساعات";
+      }
+      if (currentLang === "tr"){
+        return (ageYears < 18) ? "Öneri: yaklaşık 8–10 saat" : "Öneri: yaklaşık 7–9 saat";
+      }
+      return (ageYears < 18) ? "Recommended: ~8–10 hours" : "Recommended: ~7–9 hours";
+    }
+
+    function refreshComputedSections(){
+      if ($("liveSection").style.display !== "block") return;
+      renderHijriAndMore();
+      renderNextBirthday();
+    }
+
+    let lastBirthDateForStatic = null;
 
     function resetApp(){
       if (interval) {
@@ -1050,139 +1122,6 @@
       return { years, months: remMonths, days: remDays };
     }
 
-    function formatNumber(n){
-      return Number(n).toLocaleString();
-    }
-
-    function formatDateTimeTR(date){
-      return new Intl.DateTimeFormat(currentLang === "ar" ? "ar" : currentLang, {
-        timeZone: "Europe/Istanbul",
-        weekday:"long",
-        year:"numeric", month:"long", day:"numeric",
-        hour:"2-digit", minute:"2-digit"
-      }).format(date);
-    }
-
-    function seasonFromMonth(monthIndex0){
-      const m = monthIndex0 + 1;
-      const t = I18N[currentLang];
-      if (m === 12 || m === 1 || m === 2) return t.seasons.winter;
-      if (m >= 3 && m <= 5) return t.seasons.spring;
-      if (m >= 6 && m <= 8) return t.seasons.summer;
-      return t.seasons.autumn;
-    }
-
-    function zodiacSign(month, day){
-      const signs = {
-        ar: ["الجدي","الدلو","الحوت","الحمل","الثور","الجوزاء","السرطان","الأسد","العذراء","الميزان","العقرب","القوس"],
-        en: ["Capricorn","Aquarius","Pisces","Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius"],
-        tr: ["Oğlak","Kova","Balık","Koç","Boğa","İkizler","Yengeç","Aslan","Başak","Terazi","Akrep","Yay"]
-      };
-      const s = signs[currentLang] || signs.ar;
-
-      if ((month==1 && day>=20) || (month==2 && day<=18)) return s[1];
-      if ((month==2 && day>=19) || (month==3 && day<=20)) return s[2];
-      if ((month==3 && day>=21) || (month==4 && day<=19)) return s[3];
-      if ((month==4 && day>=20) || (month==5 && day<=20)) return s[4];
-      if ((month==5 && day>=21) || (month==6 && day<=20)) return s[5];
-      if ((month==6 && day>=21) || (month==7 && day<=22)) return s[6];
-      if ((month==7 && day>=23) || (month==8 && day<=22)) return s[7];
-      if ((month==8 && day>=23) || (month==9 && day<=22)) return s[8];
-      if ((month==9 && day>=23) || (month==10 && day<=22)) return s[9];
-      if ((month==10 && day>=23) || (month==11 && day<=21)) return s[10];
-      if ((month==11 && day>=22) || (month==12 && day<=21)) return s[11];
-      return s[0];
-    }
-
-    function healthySleepText(ageYears){
-      if (currentLang === "ar"){
-        return (ageYears < 18) ? "الموصى به تقريبًا: 8–10 ساعات" : "الموصى به تقريبًا: 7–9 ساعات";
-      }
-      if (currentLang === "tr"){
-        return (ageYears < 18) ? "Öneri: yaklaşık 8–10 saat" : "Öneri: yaklaşık 7–9 saat";
-      }
-      return (ageYears < 18) ? "Recommended: ~8–10 hours" : "Recommended: ~7–9 hours";
-    }
-
-    function refreshComputedSections(){
-      if ($("liveSection").style.display !== "block") return;
-      renderHijriAndMore();
-      renderNextBirthday(); // تحديث مباشر عند تبديل اللغة
-    }
-
-    let lastBirthDateForStatic = null;
-
-    function start(){
-      const t = I18N[currentLang];
-
-      const date = $("birthDate").value;
-      const time = $("birthTime").value || "00:00:00";
-
-      if (!date){
-        alert(t.alertNeedDate);
-        return;
-      }
-
-      const birthDate = buildLocalDate(date, time);
-      if (!birthDate){
-        alert(t.alertInvalid);
-        return;
-      }
-
-      if (birthDate.getTime() > Date.now()){
-        alert(t.alertFuture);
-        return;
-      }
-
-      saveInputs();
-
-      $("liveSection").style.display = "block";
-      $("bdaySection").style.display = "block";
-      $("hijriSection").style.display = "block";
-      $("moreSection").style.display = "block";
-      $("shareRow").style.display = "flex";
-
-      updateDynamicTitle();
-
-      if (interval) clearInterval(interval);
-
-      // نحسب الأقسام الثقيلة (الهجري/المعلومات) مرة واحدة عند البداية أو عند تغيير المدخلات
-      lastBirthDateForStatic = birthDate.getTime();
-      renderHijriAndMore();
-
-      function updateEverySecond(){
-        const nowMs = Date.now();
-        let diffMs = nowMs - birthDate.getTime();
-        if (diffMs < 0) diffMs = 0;
-
-        const seconds = Math.floor(diffMs / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const hours   = Math.floor(minutes / 60);
-        const days    = Math.floor(hours / 24);
-        const weeks   = Math.floor(days / 7);
-
-        const yearsApprox  = diffMs / (1000 * 60 * 60 * 24 * 365.2425);
-        const monthsApprox = yearsApprox * 12;
-
-        $("years").textContent    = yearsApprox.toFixed(6);
-        $("months").textContent   = monthsApprox.toFixed(2);
-        $("weeks").textContent    = formatNumber(weeks);
-        $("days").textContent     = formatNumber(days);
-        $("hours").textContent    = formatNumber(hours);
-        $("minutes").textContent  = formatNumber(minutes);
-        $("seconds").textContent  = formatNumber(seconds);
-
-        // هنا إصلاح عداد عيد الميلاد: يتحدث كل ثانية
-        renderNextBirthday(birthDate);
-
-        // تحديث رابط المشاركة
-        updateShareLink();
-      }
-
-      updateEverySecond();
-      interval = setInterval(updateEverySecond, 1000);
-    }
-
     function renderHijriAndMore(){
       const dateStr = $("birthDate").value;
       const timeStr = $("birthTime").value || "00:00:00";
@@ -1217,7 +1156,6 @@
       const yearsApprox = (Date.now() - birthDate.getTime()) / (1000*60*60*24*365.2425);
       $("sleepVal").textContent = healthySleepText(Math.floor(yearsApprox));
       $("moreBadge").textContent = "";
-
       updateShareLink();
     }
 
@@ -1238,7 +1176,6 @@
 
       let y = now.getFullYear();
       let next = new Date(y, bMonth, bDay, hh, mm, ss);
-
       if (next.getTime() <= now.getTime()){
         y += 1;
         next = new Date(y, bMonth, bDay, hh, mm, ss);
@@ -1259,16 +1196,73 @@
       const monthsApprox = Math.floor(totalDays / 30);
       const remDays = totalDays % 30;
 
-      if (currentLang === "ar"){
-        $("bdayLeftVal").textContent = `${monthsApprox} شهر و ${remDays} يوم و ${remHours} ساعة و ${remMinutes} دقيقة و ${remSeconds} ثانية`;
-      } else if (currentLang === "tr"){
-        $("bdayLeftVal").textContent = `${monthsApprox} ay ${remDays} gün ${remHours} saat ${remMinutes} dk ${remSeconds} sn`;
-      } else {
-        $("bdayLeftVal").textContent = `${monthsApprox} months ${remDays} days ${remHours}h ${remMinutes}m ${remSeconds}s`;
-      }
+      // ✅ Fix Arabic "seconds" duplication by building via a single formatter
+      $("bdayLeftVal").textContent = formatCountdown(monthsApprox, remDays, remHours, remMinutes, remSeconds);
 
       $("bdayWillVal").textContent = formatDateTimeTR(next);
       $("bdayHijriVal").textContent = hijriDateText(next, currentLang);
+    }
+
+    function start(){
+      const t = I18N[currentLang];
+      const date = $("birthDate").value;
+      const time = $("birthTime").value || "00:00:00";
+
+      if (!date){ alert(t.alertNeedDate); return; }
+
+      const birthDate = buildLocalDate(date, time);
+      if (!birthDate){ alert(t.alertInvalid); return; }
+
+      if (birthDate.getTime() > Date.now()){
+        alert(t.alertFuture);
+        return;
+      }
+
+      saveInputs();
+
+      $("liveSection").style.display = "block";
+      $("bdaySection").style.display = "block";
+      $("hijriSection").style.display = "block";
+      $("moreSection").style.display = "block";
+      $("shareRow").style.display = "flex";
+
+      updateDynamicTitle();
+
+      if (interval) clearInterval(interval);
+
+      lastBirthDateForStatic = birthDate.getTime();
+      renderHijriAndMore();
+
+      function updateEverySecond(){
+        const nowMs = Date.now();
+        let diffMs = nowMs - birthDate.getTime();
+        if (diffMs < 0) diffMs = 0;
+
+        const seconds = Math.floor(diffMs / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours   = Math.floor(minutes / 60);
+        const days    = Math.floor(hours / 24);
+        const weeks   = Math.floor(days / 7);
+
+        const yearsApprox  = diffMs / (1000 * 60 * 60 * 24 * 365.2425);
+        const monthsApprox = yearsApprox * 12;
+
+        $("years").textContent    = yearsApprox.toFixed(6);
+        $("months").textContent   = monthsApprox.toFixed(2);
+        $("weeks").textContent    = formatNumber(weeks);
+        $("days").textContent     = formatNumber(days);
+        $("hours").textContent    = formatNumber(hours);
+        $("minutes").textContent  = formatNumber(minutes);
+        $("seconds").textContent  = formatNumber(seconds);
+
+        // countdown updates every second
+        renderNextBirthday(birthDate);
+
+        updateShareLink();
+      }
+
+      updateEverySecond();
+      interval = setInterval(updateEverySecond, 1000);
     }
 
     // =========================
@@ -1354,9 +1348,6 @@
       }
     }
 
-    // =========================
-    // URL params support
-    // =========================
     function applyUrlParams(){
       const p = new URLSearchParams(window.location.search);
       const n = p.get("n");
@@ -1364,9 +1355,7 @@
       const t = p.get("t");
       const l = p.get("lang");
 
-      if (l && I18N[l]){
-        setLanguage(l);
-      }
+      if (l && I18N[l]) setLanguage(l);
 
       if (n !== null) $("name").value = n;
       if (d !== null) $("birthDate").value = d;
@@ -1379,8 +1368,14 @@
 
       restoreInputs();
 
+      // auto language by phone (first) + dropdown available
       const initial = pickInitialLanguage();
       setLanguage(initial);
+      $("langSelect").value = initial;
+
+      $("langSelect").addEventListener("change", (e) => {
+        setLanguage(e.target.value);
+      });
 
       applyUrlParams();
 
@@ -1393,7 +1388,6 @@
           updateDynamicTitle();
           updateShareLink();
 
-          // إذا تغيرت المدخلات بعد التشغيل، نعيد حساب الأقسام الثقيلة مرة واحدة
           const bd = buildLocalDate($("birthDate").value, $("birthTime").value || "00:00:00");
           if (bd && bd.getTime() !== lastBirthDateForStatic){
             lastBirthDateForStatic = bd.getTime();
