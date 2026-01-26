@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="حاسبة العمر المباشر بالثواني والدقائق والساعات والأيام. أدخل تاريخ ووقت الميلاد وشاهد العمر يتحدث لحظيًا.">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#0f172a">
@@ -12,8 +12,8 @@
   <link rel="apple-touch-icon" href="assets/img/favicon-512.png">
   <link rel="manifest" href="/manifest.json">
 
-  <meta property="og:title" content="Live Age Calculator | حاسبة العمر المباشر">
-  <meta property="og:description" content="احسب عمرك بشكل مباشر بالسنوات والأشهر والأيام والساعات والدقائق والثواني.">
+  <meta property="og:title" content="حاسبة العمر المباشر | Live Age Calculator">
+  <meta property="og:description" content="احسب عمرك بشكل لحظي ومباشر بالسنوات والأشهر والأيام والساعات والدقائق والثواني.">
   <meta property="og:url" content="https://tarekja.github.io/">
   <meta property="og:type" content="website">
 
@@ -26,12 +26,12 @@
     gtag('config', 'G-FZ91MD319E', { anonymize_ip: true });
   </script>
 
-  <!-- Google AdSense - التحميل الأساسي -->
+  <!-- Google AdSense -->
   <meta name="google-adsense-account" content="ca-pub-3878960602510145">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3878960602510145"
           crossorigin="anonymous"></script>
 
-  <title>Live Age Calculator | حاسبة العمر المباشر</title>
+  <title>حاسبة العمر المباشر | Live Age Calculator</title>
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
@@ -39,25 +39,24 @@
     <div class="container">
       <div class="box">
 
-        <!-- إعلان 1: أعلى الصفحة (responsive) -->
+        <!-- إعلان أول – أعلى الصفحة -->
         <ins class="adsbygoogle"
              style="display:block; margin: 0 auto 20px auto; text-align:center;"
              data-ad-client="ca-pub-3878960602510145"
-             data-ad-slot="1234567890"               <!-- ← غيّر هذا برقم الـ slot الحقيقي -->
-             <!-- إعلان أول: أعلى الصفحة (Responsive) -->
-<ins class="adsbygoogle"
-     style="display:block; margin: 0 auto 20px auto; text-align:center;"
-     data-ad-client="ca-pub-3878960602510145"
-     data-ad-slot="XXXXXXXXXX"           <!-- ← غيّر هذا برقم الـ slot الحقيقي لاحقًا -->
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+             data-ad-slot="XXXXXXXXXX"  <!-- ← غيّر برقم الـ slot الحقيقي بعد الموافقة -->
+             data-ad-format="auto"
              data-full-width-responsive="true"></ins>
         <script>
           (adsbygoogle = window.adsbygoogle || []).push({});
-        <script src="assets/js/i18n.js"></script>
+        </script>
+
+        <div class="topbar">
+          <div class="lang-wrap">
+            <span id="uiLangLabel">اللغة</span>
+            <select id="langSelect" aria-label="Language selector">
+              <option value="ar">العربية</option>
+              <option value="tr">Türkçe</option>
+              <option value="en">English</option>
             </select>
           </div>
         </div>
@@ -105,7 +104,6 @@
           </button>
         </div>
 
-        <!-- النتائج الأساسية -->
         <div class="section" id="liveSection" style="display:none;">
           <div class="section-title">
             <span id="liveTitle">عمرك الآن</span>
@@ -122,27 +120,17 @@
           </div>
         </div>
 
-        <!-- إعلان 2: بعد النتائج الرئيسية -->
+        <!-- إعلان ثاني – بعد النتائج -->
         <ins class="adsbygoogle"
              style="display:block; margin: 24px auto; text-align:center;"
              data-ad-client="ca-pub-3878960602510145"
-             data-ad-slot="0987654321"               <!-- ← غيّر هذا برقم slot ثاني حقيقي -->
-             <!-- إعلان ثاني: بعد النتائج الرئيسية -->
-<ins class="adsbygoogle"
-     style="display:block; margin: 24px auto; text-align:center;"
-     data-ad-client="ca-pub-3878960602510145"
-     data-ad-slot="YYYYYYYYYY"           <!-- ← رقم slot مختلف إذا بدك -->
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+             data-ad-slot="YYYYYYYYYY"  <!-- ← غيّر برقم slot ثاني لاحقًا -->
+             data-ad-format="auto"
              data-full-width-responsive="true"></ins>
         <script>
           (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
 
-        <!-- باقي الأقسام (عيد الميلاد، الهجري، معلومات إضافية، footer) -->
         <div class="section" id="bdaySection" style="display:none;">
           <div class="section-title">
             <span id="bdayTitle">عيد ميلادك القادم</span>
@@ -215,7 +203,7 @@
     </div>
   </div>
 
-  <!-- نافذة المشاركة -->
+  <!-- Share fallback modal -->
   <div class="modal" id="shareModal" role="dialog" aria-modal="true" aria-label="Share dialog">
     <div class="modal-card">
       <div class="modal-head">
@@ -241,11 +229,9 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/service-worker.js')
-          .catch(err => console.log('Service Worker error:', err));
+          .catch(err => console.log('Service Worker registration failed:', err));
       });
     }
   </script>
 </body>
 </html>
-
-
