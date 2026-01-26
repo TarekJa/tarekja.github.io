@@ -1,4 +1,3 @@
-// i18n.js - ترجمة مشتركة لـ privacy و about و index
 const I18N = {
   ar: {
     dir: "rtl",
@@ -7,22 +6,22 @@ const I18N = {
     backHome: "العودة للرئيسية",
     aboutLink: "من نحن",
     privacyLink: "سياسة الخصوصية",
+
     // خصوصية
-    pageTitle: "سياسة الخصوصية",
-    title: "سياسة الخصوصية",
+    privacyTitle: "سياسة الخصوصية",
     updated: "آخر تحديث: يناير 2026",
     h1: "ما الذي نجمعه؟",
-    p1: "لا نجمع أي بيانات شخصية ولا نرسل أي معلومات تدخلها إلى خوادمنا. كل الحسابات محلياً داخل متصفحك.",
+    p1: "لا نجمع بيانات شخصية ولا نرسل أي مدخلات إلى خوادمنا. كل الحسابات داخل المتصفح فقط.",
     h2: "التخزين المحلي",
-    p2: "نحفظ بعض البيانات مؤقتاً داخل جهازك لتسهيل الاستخدام. يمكنك مسحها بضغطة زر «مسح».",
+    p2: "نحفظ بعض البيانات مؤقتاً على جهازك. يمكنك مسحها بسهولة.",
     h3: "الإعلانات وملفات تعريف الارتباط",
-    p3: "نستخدم Google AdSense. قد تستخدم Google ملفات تعريف ارتباط لعرض إعلانات مناسبة. يمكنك إدارة الإعدادات من المتصفح.",
+    p3: "نستخدم Google AdSense. قد تستخدم Google ملفات تعريف ارتباط. يمكنك إدارة الإعدادات.",
     h4: "مشاركة الرابط",
-    p4: "الرابط قد يحتوي على المدخلات التي أدخلتها. لا تُرسل إلى أي خادم.",
-    h5: "كيف نتواصل معك؟",
-    p5: "لأي استفسار: tarekjawish89@gmail.com",
+    p4: "الرابط قد يحتوي على مدخلاتك. لا تُرسل إلى أي خادم.",
+    h5: "التواصل",
+    p5: "للاستفسارات: tarekjawish89@gmail.com",
     h6: "التغييرات على السياسة",
-    p6: "قد نحدث السياسة. استمرار استخدام الموقع يعني قبول التحديثات.",
+    p6: "قد نحدث السياسة. استخدام الموقع يعني قبول التحديثات.",
     foot: "باستخدام الموقع توافق على السياسة."
   },
   en: {
@@ -32,22 +31,22 @@ const I18N = {
     backHome: "Back to Home",
     aboutLink: "About",
     privacyLink: "Privacy Policy",
-    pageTitle: "Privacy Policy",
-    title: "Privacy Policy",
+
+    privacyTitle: "Privacy Policy",
     updated: "Last updated: January 2026",
     h1: "What do we collect?",
-    p1: "We do not collect personal data or send inputs to servers. Calculations run locally.",
+    p1: "We do not collect or send personal data. Calculations run locally.",
     h2: "Local Storage",
-    p2: "We store some data temporarily on your device. You can clear it anytime.",
+    p2: "Some data is stored temporarily on your device. You can clear it.",
     h3: "Ads & Cookies",
-    p3: "We use Google AdSense. Manage cookie preferences in your browser.",
+    p3: "We use Google AdSense. Manage cookie settings in your browser.",
     h4: "Share Link",
-    p4: "The link may contain your inputs. No data is sent to servers.",
+    p4: "Link may contain your inputs. No data sent to servers.",
     h5: "Contact",
-    p5: "For inquiries: tarekjawish89@gmail.com",
+    p5: "Inquiries: tarekjawish89@gmail.com",
     h6: "Policy Changes",
-    p6: "We may update this policy. Continued use means acceptance.",
-    foot: "By using the site you agree to this policy."
+    p6: "Policy may be updated. Continued use means acceptance.",
+    foot: "By using the site you agree to the policy."
   },
   tr: {
     dir: "ltr",
@@ -56,13 +55,13 @@ const I18N = {
     backHome: "Ana sayfaya dön",
     aboutLink: "Hakkında",
     privacyLink: "Gizlilik Politikası",
-    pageTitle: "Gizlilik Politikası",
-    title: "Gizlilik Politikası",
+
+    privacyTitle: "Gizlilik Politikası",
     updated: "Son güncelleme: Ocak 2026",
     h1: "Ne topluyoruz?",
     p1: "Kişisel veri toplamıyoruz. Hesaplamalar tarayıcıda yapılır.",
     h2: "Yerel Depolama",
-    p2: "Bazı verileri cihazınızda saklıyoruz. İstediğiniz zaman temizleyebilirsiniz.",
+    p2: "Bazı veriler cihazınızda saklanır. İstediğiniz zaman temizleyebilirsiniz.",
     h3: "Reklamlar ve Çerezler",
     p3: "Google AdSense kullanıyoruz. Çerez ayarlarını tarayıcıdan yönetebilirsiniz.",
     h4: "Bağlantı Paylaşımı",
@@ -70,7 +69,7 @@ const I18N = {
     h5: "İletişim",
     p5: "Sorular için: tarekjawish89@gmail.com",
     h6: "Politika Değişiklikleri",
-    p6: "Politikayı güncelleyebiliriz. Kullanıma devam etmek kabul anlamına gelir.",
+    p6: "Politika güncellenebilir. Kullanıma devam etmek kabul anlamına gelir.",
     foot: "Siteyi kullanarak politikayı kabul etmiş olursunuz."
   }
 };
@@ -96,31 +95,27 @@ function applyLanguage(lang) {
   document.documentElement.lang = t.lang;
   document.documentElement.dir = t.dir;
 
-  // مشترك
   document.getElementById("lblLang")?.textContent = t.lblLang;
   document.getElementById("backHome")?.textContent = t.backHome;
   document.getElementById("aboutLink")?.textContent = t.aboutLink;
   document.getElementById("privacyLink")?.textContent = t.privacyLink;
 
   // خصوصية
-  if (document.querySelector("h1#title")?.textContent.includes("سياسة") || document.querySelector("h1#title")?.textContent.includes("Privacy")) {
-    document.getElementById("pageTitle")?.textContent = t.privacyPageTitle;
-    document.getElementById("title")?.textContent = t.privacyTitle;
-    document.getElementById("updated")?.textContent = t.privacyUpdated;
-    document.getElementById("h1")?.textContent = t.privacyH1;
-    document.getElementById("p1")?.textContent = t.privacyP1;
-    document.getElementById("h2")?.textContent = t.privacyH2;
-    document.getElementById("p2")?.textContent = t.privacyP2;
-    document.getElementById("h3")?.textContent = t.privacyH3;
-    document.getElementById("p3")?.textContent = t.privacyP3;
-    document.getElementById("h4")?.textContent = t.privacyH4;
-    document.getElementById("p4")?.textContent = t.privacyP4;
-    document.getElementById("h5")?.textContent = t.privacyH5;
-    document.getElementById("p5")?.textContent = t.privacyP5;
-    document.getElementById("h6")?.textContent = t.privacyH6;
-    document.getElementById("p6")?.textContent = t.privacyP6;
-    document.getElementById("foot")?.textContent = t.privacyFoot;
-  }
+  document.getElementById("title")?.textContent = t.privacyTitle;
+  document.getElementById("updated")?.textContent = t.updated;
+  document.getElementById("h1")?.textContent = t.h1;
+  document.getElementById("p1")?.textContent = t.p1;
+  document.getElementById("h2")?.textContent = t.h2;
+  document.getElementById("p2")?.textContent = t.p2;
+  document.getElementById("h3")?.textContent = t.h3;
+  document.getElementById("p3")?.textContent = t.p3;
+  document.getElementById("h4")?.textContent = t.h4;
+  document.getElementById("p4")?.textContent = t.p4;
+  document.getElementById("h5")?.textContent = t.h5;
+  document.getElementById("p5")?.textContent = t.p5;
+  document.getElementById("h6")?.textContent = t.h6;
+  document.getElementById("p6")?.textContent = t.p6;
+  document.getElementById("foot")?.textContent = t.foot;
 
   const select = document.getElementById("langSelect");
   if (select) select.value = lang;
