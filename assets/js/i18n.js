@@ -1,5 +1,5 @@
-// i18n.js – نظام الترجمة المشترك لكل الصفحات
-// يغطي: index.html + privacy.html + about.html
+// i18n.js – ترجمة مشتركة لكل الصفحات (index + privacy + about)
+// غيّر اللغة فوراً، dir يتعدل، نصوص كاملة ومناسبة
 
 const I18N = {
   ar: {
@@ -11,7 +11,7 @@ const I18N = {
     privacyLink: "سياسة الخصوصية",
     contactLink: "تواصل",
 
-    // ── نصوص مشتركة (index + footer)
+    // index.html – نصوص مشتركة
     shareBtnText: "مشاركة",
     shareModalTitle: "مشاركة",
     liveTitle: "عمرك الآن",
@@ -24,42 +24,41 @@ const I18N = {
     rMinutes: "الدقائق",
     rSeconds: "الثواني",
 
-    // ── نصوص صفحة الخصوصية (privacy.html)
+    // privacy.html
     privacyPageTitle: "سياسة الخصوصية",
     privacyTitle: "سياسة الخصوصية",
     privacyUpdated: "آخر تحديث: يناير 2026",
     privacyH1: "ما الذي نجمعه؟",
-    privacyP1: "لا نجمع أي بيانات شخصية تُحدد هويتك، ولا نرسل أي من المدخلات التي تضعها (الاسم، تاريخ الميلاد، ساعة الميلاد) إلى أي خادم خارجي. جميع العمليات الحسابية تتم محليًا داخل متصفحك فقط.",
-    privacyH2: "التخزين المحلي (Local Storage)",
-    privacyP2: "لحسن تجربة الاستخدام، نحفظ بعض البيانات مؤقتًا داخل جهازك (مثل الاسم وتاريخ وساعة الميلاد المدخلين سابقًا) حتى تظل محفوظة في الزيارات التالية. يمكنك حذف هذه البيانات في أي وقت بالضغط على زر «مسح» في الصفحة الرئيسية، أو من خلال إعدادات المتصفح.",
+    privacyP1: "لا نجمع أي بيانات شخصية تُحدد هويتك، ولا نرسل أي من المدخلات التي تضعها إلى أي خادم خارجي. جميع الحسابات تتم محليًا داخل متصفحك فقط.",
+    privacyH2: "التخزين المحلي",
+    privacyP2: "نحفظ بعض البيانات مؤقتًا داخل جهازك لتسهيل الاستخدام. يمكنك حذفها بضغطة زر «مسح» أو من إعدادات المتصفح.",
     privacyH3: "الإعلانات وملفات تعريف الارتباط",
-    privacyP3: "نستخدم خدمة Google AdSense لعرض الإعلانات. قد تستخدم Google وشركاؤها ملفات تعريف الارتباط أو تقنيات مشابهة لجمع بيانات حول استخدامك للموقع بهدف عرض إعلانات ذات صلة وقياس أداء الإعلانات. لا نتحكم في هذه البيانات. يمكنك إدارة تفضيلات الإعلانات من إعدادات Google Ads أو المتصفح.",
-    privacyH4: "ميزة مشاركة الرابط",
-    privacyP4: "عند استخدام زر المشاركة، يتم إنشاء رابط يحتوي على المدخلات التي أدخلتها (تاريخ ووقت الميلاد إن وجد) حتى يتمكن الشخص الآخر من رؤية نفس النتيجة. هذه المعلومات لا تُرسل إلى أي خادم، بل تبقى ضمن الرابط فقط.",
-    privacyH5: "كيف نتواصل معك؟",
-    privacyP5: "لأي استفسار، اقتراح، ملاحظة أو شكوى، يمكنك التواصل معنا مباشرة عبر البريد: tarekjawish89@gmail.com",
-    privacyH6: "التغييرات على هذه السياسة",
-    privacyP6: "قد نقوم بتحديث هذه السياسة من وقت لآخر. سيتم نشر النسخة الجديدة هنا مع تاريخ التحديث. استمرار استخدامك للموقع بعد أي تعديل يُعتبر موافقة ضمنية على السياسة المحدثة.",
-    privacyFoot: "باستمرارك في استخدام الموقع، فإنك توافق على هذه السياسة وأي تحديثات لها.",
+    privacyP3: "نستخدم Google AdSense. قد تستخدم Google ملفات تعريف ارتباط لعرض إعلانات مناسبة وقياس الأداء. يمكنك إدارة الإعدادات من Google Ads أو المتصفح.",
+    privacyH4: "مشاركة الرابط",
+    privacyP4: "الرابط قد يحتوي على المدخلات التي أدخلتها. لا تُرسل هذه المعلومات إلى أي خادم.",
+    privacyH5: "التواصل",
+    privacyP5: "لأي استفسار: tarekjawish89@gmail.com",
+    privacyH6: "التغييرات على السياسة",
+    privacyP6: "قد نحدث هذه السياسة. استمرار استخدام الموقع يعني قبول التحديثات.",
+    privacyFoot: "باستخدام الموقع توافق على هذه السياسة.",
 
-    // ── نصوص صفحة "من نحن" (about.html)
+    // about.html
     aboutPageTitle: "من نحن",
     aboutTitle: "من نحن",
     aboutUpdated: "آخر تحديث: يناير 2026",
-    aboutH1: "مقدمة عن الموقع",
-    aboutP1: "حاسبة العمر المباشر هي أداة مجانية بسيطة وسريعة تهدف إلى مساعدتك في معرفة عمرك بدقة لحظية (بالثواني والدقائق والساعات والأيام والأسابيع والأشهر والسنوات). تم تصميمها لتكون خفيفة، تعمل بدون تسجيل دخول، وتدعم ثلاث لغات رئيسية: العربية، التركية، والإنجليزية. الموقع مبني بتقنيات ويب حديثة (HTML, CSS, JavaScript) ويعمل على جميع الأجهزة.",
-    aboutH2: "كيف تعمل الحاسبة؟",
-    aboutP2: "كل ما تحتاجه هو إدخال تاريخ ميلادك (واختياريًا ساعة الميلاد)، ثم تضغط «احسب العمر». الحساب يتم بالكامل داخل متصفحك دون إرسال أي بيانات إلى خادم خارجي. تستخدم تقنيات JavaScript الحديثة مثل Intl.DateTimeFormat لدعم التقويم الهجري (أم القرى)، والحساب الدقيق للأشهر والسنوات بناءً على التواريخ الحقيقية.",
-    aboutH3: "لماذا الدقة مهمة؟",
-    aboutP3: "معظم حاسبات العمر تعطي نتائج تقريبية فقط. نحن نذهب خطوة أبعد: نحسب السنوات والأشهر بدقة تقويمية حقيقية (مثل: «33 سنة و4 أشهر و12 يوم»). كما نعرض العمر بالتقويم الهجري بدقة، مع مراعاة اختلاف طول السنة الهجرية، وهذا يجعل النتيجة أكثر واقعية ومفيدة خاصة للجمهور العربي والمسلم.",
-    aboutH4: "المستقبل والتطوير",
-    aboutP4: "الموقع ما زال في طور التطوير المستمر. نخطط لإضافة ميزات جديدة مثل: حساب العمر بالدقائق من لحظة الولادة، إحصائيات ممتعة، دعم المزيد من اللغات، ونسخة تطبيق جوال (PWA) تعمل بدون إنترنت. كل هذا مجانًا وبدون إعلانات مزعجة.",
-    aboutH5: "التواصل والدعم",
-    aboutP5: "صاحب المشروع: طارق جويش – خبير MEAL يعمل في المجال الإنساني. إذا عندك اقتراح، ملاحظة، أو فكرة لتحسين الموقع، تواصل معي مباشرة عبر البريد: tarekjawish89@gmail.com أو عبر LinkedIn.",
-    aboutFoot: "نشكرك على زيارتك، ونتمنى لك عمرًا طويلًا مليئًا بالصحة والسعادة."
+    aboutH1: "مقدمة",
+    aboutP1: "حاسبة العمر المباشر أداة مجانية لحساب عمرك لحظيًا بدقة عالية. تدعم العربية والتركية والإنجليزية وتعمل بدون تسجيل.",
+    aboutH2: "كيف تعمل؟",
+    aboutP2: "أدخل تاريخ ميلادك (واختياريًا الساعة) ثم اضغط «احسب». كل الحسابات داخل متصفحك فقط.",
+    aboutH3: "لماذا الدقة؟",
+    aboutP3: "نحسب السنوات والأشهر بدقة تقويمية حقيقية + دعم التقويم الهجري.",
+    aboutH4: "المستقبل",
+    aboutP4: "نخطط لإضافة إحصائيات ممتعة ودعم PWA بدون نت.",
+    aboutH5: "التواصل",
+    aboutP5: "طارق جويش – tarekjawish89@gmail.com",
+    aboutFoot: "شكرًا لزيارتك، عمرًا مديدًا بالصحة."
   },
 
-  // ── الإنجليزية (en) ────────────────────────────────────────────────────────
   en: {
     dir: "ltr",
     lang: "en",
@@ -69,7 +68,6 @@ const I18N = {
     privacyLink: "Privacy Policy",
     contactLink: "Contact",
 
-    // Shared
     shareBtnText: "Share",
     shareModalTitle: "Share",
     liveTitle: "Your age now",
@@ -83,42 +81,39 @@ const I18N = {
     rMinutes: "Minutes",
     rSeconds: "Seconds",
 
-    // Privacy
     privacyPageTitle: "Privacy Policy",
     privacyTitle: "Privacy Policy",
     privacyUpdated: "Last updated: January 2026",
     privacyH1: "What do we collect?",
-    privacyP1: "We do not collect any personally identifiable information and do not transmit any input data to external servers. All calculations are performed locally in your browser.",
+    privacyP1: "We do not collect personal data or send inputs to servers. All calculations run locally.",
     privacyH2: "Local Storage",
-    privacyP2: "We temporarily store some data on your device for convenience. You can delete it at any time using the «Clear» button or browser settings.",
+    privacyP2: "We store some data temporarily on your device. You can clear it anytime.",
     privacyH3: "Ads & Cookies",
-    privacyP3: "We use Google AdSense. Google may use cookies to serve relevant ads and measure performance. You can manage preferences via Google Ads or browser settings.",
-    privacyH4: "Share Link Feature",
-    privacyP4: "The share link may contain your inputs so others can see the same result. No data is sent to any server.",
-    privacyH5: "How to contact us?",
-    privacyP5: "For inquiries or complaints: tarekjawish89@gmail.com",
-    privacyH6: "Changes to this Policy",
-    privacyP6: "We may update this policy. Continued use constitutes acceptance of updates.",
-    privacyFoot: "By continuing to use the site, you agree to this policy.",
+    privacyP3: "We use Google AdSense. Google may use cookies for ads. Manage via Google Ads or browser.",
+    privacyH4: "Share Link",
+    privacyP4: "Share link may contain your inputs. No data is sent to servers.",
+    privacyH5: "Contact",
+    privacyP5: "For inquiries: tarekjawish89@gmail.com",
+    privacyH6: "Policy Changes",
+    privacyP6: "We may update this policy. Continued use means acceptance.",
+    privacyFoot: "By using the site you agree to this policy.",
 
-    // About
     aboutPageTitle: "About Us",
     aboutTitle: "About Us",
     aboutUpdated: "Last updated: January 2026",
-    aboutH1: "Introduction to the Site",
-    aboutP1: "Live Age Calculator is a free, simple and fast tool designed to help you know your exact age in real time (seconds, minutes, hours, days, weeks, months, years). It is lightweight, requires no login, and supports three main languages: Arabic, Turkish, and English.",
-    aboutH2: "How does the calculator work?",
-    aboutP2: "Enter your birth date (and optionally time), then click «Calculate Age». All calculations happen in your browser without sending data to any server. It uses modern JavaScript features like Intl.DateTimeFormat for Hijri calendar support and precise month/year calculation.",
-    aboutH3: "Why is accuracy important?",
-    aboutP3: "Most age calculators give approximate results. We go further: we calculate years and months with real calendar precision (e.g. '33 years, 4 months, 12 days'). We also show Hijri age accurately, considering the shorter Hijri year, making results more realistic.",
-    aboutH4: "Future & Development",
-    aboutP4: "The site is under continuous development. We plan to add: age in minutes since birth, fun stats, more languages, and offline PWA support. All free and without annoying ads.",
-    aboutH5: "Contact & Support",
-    aboutP5: "Project owner: Tarek Jawish – MEAL Expert in humanitarian field. For suggestions or feedback, contact me at: tarekjawish89@gmail.com or via LinkedIn.",
-    aboutFoot: "Thank you for visiting, and we wish you a long life full of health and happiness."
+    aboutH1: "Introduction",
+    aboutP1: "Live Age Calculator is a free tool to calculate your age in real time with high accuracy. Supports Arabic, Turkish, English.",
+    aboutH2: "How it works?",
+    aboutP2: "Enter birth date/time and click «Calculate». Everything runs in your browser.",
+    aboutH3: "Why accuracy matters?",
+    aboutP3: "We calculate years/months with real calendar precision + Hijri support.",
+    aboutH4: "Future plans",
+    aboutP4: "Adding stats, more languages, offline PWA support.",
+    aboutH5: "Contact",
+    aboutP5: "Tarek Jawish – tarekjawish89@gmail.com",
+    aboutFoot: "Thanks for visiting. Wishing you a long healthy life."
   },
 
-  // ── التركية (tr) ───────────────────────────────────────────────────────────
   tr: {
     dir: "ltr",
     lang: "tr",
@@ -141,54 +136,47 @@ const I18N = {
     rMinutes: "Dakika",
     rSeconds: "Saniye",
 
-    // Privacy (تركي)
     privacyPageTitle: "Gizlilik Politikası",
     privacyTitle: "Gizlilik Politikası",
     privacyUpdated: "Son güncelleme: Ocak 2026",
     privacyH1: "Ne topluyoruz?",
-    privacyP1: "Kişisel tanımlayıcı veri toplamıyoruz ve girdiğiniz bilgileri dış sunuculara göndermiyoruz. Tüm hesaplamalar tarayıcınızda yerel olarak yapılır.",
-    privacyH2: "Yerel Depolama (Local Storage)",
-    privacyP2: "Kullanım kolaylığı için bazı verileri cihazınızda geçici olarak saklıyoruz. Ana sayfadaki «Temizle» butonuyla veya tarayıcı ayarlarından silebilirsiniz.",
+    privacyP1: "Kişisel veri toplamıyoruz, hesaplamalar tarayıcıda yerel yapılır.",
+    privacyH2: "Yerel Depolama",
+    privacyP2: "Bazı verileri cihazınızda saklıyoruz. İstediğiniz zaman temizleyebilirsiniz.",
     privacyH3: "Reklamlar ve Çerezler",
-    privacyP3: "Google AdSense kullanıyoruz. Google ilgili reklamlar için çerez kullanabilir. Tercihlerinizi Google Ads veya tarayıcı ayarlarından yönetebilirsiniz.",
-    privacyH4: "Bağlantı Paylaşma Özelliği",
-    privacyP4: "Paylaşım bağlantısı girdiğiniz bilgileri içerebilir. Bu bilgiler herhangi bir sunucuya gönderilmez.",
-    privacyH5: "Bize nasıl ulaşılır?",
-    privacyP5: "Sorular veya şikayetler için: tarekjawish89@gmail.com",
-    privacyH6: "Politikadaki Değişiklikler",
-    privacyP6: "Bu politikayı zaman zaman güncelleyebiliriz. Güncellenmiş sürüm burada yayınlanacaktır. Siteyi kullanmaya devam etmek güncellemeleri kabul ettiğiniz anlamına gelir.",
-    privacyFoot: "Siteyi kullanmaya devam ederek bu politikayı kabul etmiş olursunuz.",
+    privacyP3: "Google AdSense kullanıyoruz. Çerez tercihlerini yönetebilirsiniz.",
+    privacyH4: "Bağlantı Paylaşımı",
+    privacyP4: "Paylaşım bağlantısı girdiğiniz bilgileri içerebilir. Sunucuya gönderilmez.",
+    privacyH5: "İletişim",
+    privacyP5: "Sorular için: tarekjawish89@gmail.com",
+    privacyH6: "Politika Değişiklikleri",
+    privacyP6: "Politikayı güncelleyebiliriz. Kullanıma devam etmek kabul anlamına gelir.",
+    privacyFoot: "Siteyi kullanarak politikayı kabul etmiş olursunuz.",
 
-    // About (تركي)
     aboutPageTitle: "Hakkında",
     aboutTitle: "Hakkında",
     aboutUpdated: "Son güncelleme: Ocak 2026",
     aboutH1: "Site Hakkında",
-    aboutP1: "Canlı Yaş Hesaplayıcı ücretsiz, basit ve hızlı bir araçtır. Doğum tarihinizi gerçek zamanlı olarak (saniye, dakika, saat, gün, hafta, ay, yıl) hesaplamanıza yardımcı olur. Hafiftir, giriş gerektirmez ve Arapça, Türkçe, İngilizce dillerini destekler.",
-    aboutH2: "Hesaplayıcı nasıl çalışır?",
-    aboutP2: "Doğum tarihinizi (isteğe bağlı saat) girin ve «Yaşı Hesapla»ya basın. Tüm hesaplamalar tarayıcınızda yapılır, veri sunucuya gönderilmez. Modern JavaScript ile Hicri takvimi destekler ve gerçek takvim hassasiyetinde ay/yıl hesaplar.",
+    aboutP1: "Canlı Yaş Hesaplayıcı ücretsiz araçtır. Yaşınızı gerçek zamanlı hesaplar, Arapça/Türkçe/İngilizce destekler.",
+    aboutH2: "Nasıl çalışır?",
+    aboutP2: "Doğum tarihi/saati girin ve «Hesapla»ya basın. Her şey tarayıcıda yapılır.",
     aboutH3: "Doğruluk neden önemli?",
-    aboutP3: "Çoğu hesaplayıcı yaklaşık sonuç verir. Biz daha ileri gideriz: gerçek takvim hassasiyetinde yıl ve ay hesaplarız (ör: «33 yıl, 4 ay, 12 gün»). Hicri yaşı da doğru hesaplarız, bu sonuçları daha gerçekçi ve özellikle Müslümanlar için faydalı kılar.",
-    aboutH4: "Gelecek ve Geliştirme",
-    aboutP4: "Site sürekli geliştirilmektedir. Yakında ekleyeceğimiz özellikler: doğumdan beri dakikalar, eğlenceli istatistikler, daha fazla dil, çevrimdışı PWA desteği. Hepsi ücretsiz ve rahatsız edici reklam olmadan.",
-    aboutH5: "İletişim ve Destek",
-    aboutP5: "Proje sahibi: Tarek Jawish – İnsani yardım alanında MEAL Uzmanı. Öneri, yorum veya fikir için doğrudan iletişime geçin: tarekjawish89@gmail.com veya LinkedIn.",
-    aboutFoot: "Ziyaretiniz için teşekkür eder, sağlıklı ve mutlu uzun bir ömür dileriz."
+    aboutP3: "Gerçek takvim hassasiyetinde yıl/ay hesaplarız + Hicri takvim desteği.",
+    aboutH4: "Gelecek",
+    aboutP4: "İstatistikler, daha fazla dil, çevrimdışı PWA desteği planlıyoruz.",
+    aboutH5: "İletişim",
+    aboutP5: "Tarek Jawish – tarekjawish89@gmail.com",
+    aboutFoot: "Ziyaretiniz için teşekkürler, sağlıklı uzun ömür dileriz."
   }
 };
 
-// ── الدوال الأساسية ───────────────────────────────────────────────────────────
-
 function getInitialLang() {
-  // 1. من الـ URL
   const urlLang = new URLSearchParams(location.search).get("lang");
   if (urlLang && I18N[urlLang]) return urlLang;
 
-  // 2. من localStorage
   const saved = localStorage.getItem("lac_lang");
   if (saved && I18N[saved]) return saved;
 
-  // 3. من لغة المتصفح
   const langs = navigator.languages || [navigator.language || "en"];
   const lower = langs.map(l => l.toLowerCase());
   if (lower.some(l => l.startsWith("ar"))) return "ar";
@@ -200,19 +188,18 @@ function applyLanguage(lang) {
   if (!I18N[lang]) lang = "ar";
   const t = I18N[lang];
 
-  // تغيير اتجاه و لغة الصفحة
   document.documentElement.lang = t.lang;
   document.documentElement.dir = t.dir;
 
-  // العناصر المشتركة (موجودة في كل الصفحات)
+  // مشترك
   document.getElementById("lblLang")?.textContent = t.lblLang;
   document.getElementById("backHome")?.textContent = t.backHome;
   document.getElementById("aboutLink")?.textContent = t.aboutLink;
   document.getElementById("privacyLink")?.textContent = t.privacyLink;
 
-  // ── خصوصية ──
-  if (document.getElementById("privacyTitle") || document.getElementById("title")) {
-    document.getElementById("pageTitle")?.textContent = t.privacyPageTitle || t.privacyTitle;
+  // خصوصية
+  if (document.querySelector("h1#title")?.textContent.includes("سياسة") || document.querySelector("h1#title")?.textContent.includes("Privacy")) {
+    document.getElementById("pageTitle")?.textContent = t.privacyPageTitle;
     document.getElementById("title")?.textContent = t.privacyTitle;
     document.getElementById("updated")?.textContent = t.privacyUpdated;
     document.getElementById("h1")?.textContent = t.privacyH1;
@@ -230,9 +217,9 @@ function applyLanguage(lang) {
     document.getElementById("foot")?.textContent = t.privacyFoot;
   }
 
-  // ── من نحن ──
-  if (document.getElementById("aboutTitle") || document.getElementById("title")) {
-    document.getElementById("pageTitle")?.textContent = t.aboutPageTitle || t.aboutTitle;
+  // من نحن
+  if (document.querySelector("h1#title")?.textContent.includes("من نحن") || document.querySelector("h1#title")?.textContent.includes("About")) {
+    document.getElementById("pageTitle")?.textContent = t.aboutPageTitle;
     document.getElementById("title")?.textContent = t.aboutTitle;
     document.getElementById("updated")?.textContent = t.aboutUpdated;
     document.getElementById("h1")?.textContent = t.aboutH1;
@@ -248,15 +235,11 @@ function applyLanguage(lang) {
     document.getElementById("foot")?.textContent = t.aboutFoot;
   }
 
-  // تحديث قيمة الـ select
   const select = document.getElementById("langSelect");
   if (select) select.value = lang;
 
-  // حفظ الاختيار
   localStorage.setItem("lac_lang", lang);
 }
-
-// ── تهيئة الصفحة عند التحميل ──────────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", () => {
   const lang = getInitialLang();
