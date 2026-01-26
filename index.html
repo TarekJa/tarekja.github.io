@@ -26,7 +26,7 @@
     gtag('config', 'G-FZ91MD319E', { anonymize_ip: true });
   </script>
 
-  <!-- Google AdSense script (تحميل مرة واحدة) -->
+  <!-- Google AdSense - التحميل الأساسي -->
   <meta name="google-adsense-account" content="ca-pub-3878960602510145">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3878960602510145"
           crossorigin="anonymous"></script>
@@ -39,11 +39,11 @@
     <div class="container">
       <div class="box">
 
-        <!-- إعلان أول – أعلى الصفحة (responsive) -->
-        <ins class="adsbygoogle top-ad"
-             style="display:block; margin: 0 auto 16px auto; text-align:center;"
+        <!-- إعلان 1: أعلى الصفحة (responsive) -->
+        <ins class="adsbygoogle"
+             style="display:block; margin: 0 auto 20px auto; text-align:center;"
              data-ad-client="ca-pub-3878960602510145"
-             data-ad-slot="XXXXXXXXXX"           <!-- ← غيّر هذا برقم الـ slot الجديد من AdSense -->
+             data-ad-slot="1234567890"               <!-- ← غيّر هذا برقم الـ slot الحقيقي -->
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
         <script>
@@ -121,18 +121,18 @@
           </div>
         </div>
 
-        <!-- إعلان ثاني – بعد النتائج الرئيسية (rectangle) -->
-        <ins class="adsbygoogle mid-ad"
-             style="display:block; margin: 20px auto; text-align:center;"
+        <!-- إعلان 2: بعد النتائج الرئيسية -->
+        <ins class="adsbygoogle"
+             style="display:block; margin: 24px auto; text-align:center;"
              data-ad-client="ca-pub-3878960602510145"
-             data-ad-slot="XXXXXXXXXX"           <!-- ← غيّر هذا برقم slot جديد -->
+             data-ad-slot="0987654321"               <!-- ← غيّر هذا برقم slot ثاني حقيقي -->
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
         <script>
           (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
 
-        <!-- عيد الميلاد القادم -->
+        <!-- باقي الأقسام (عيد الميلاد، الهجري، معلومات إضافية، footer) -->
         <div class="section" id="bdaySection" style="display:none;">
           <div class="section-title">
             <span id="bdayTitle">عيد ميلادك القادم</span>
@@ -148,7 +148,6 @@
           </div>
         </div>
 
-        <!-- العمر الهجري -->
         <div class="section" id="hijriSection" style="display:none;">
           <div class="section-title">
             <span id="hTitle">العمر حسب التقويم الهجري</span>
@@ -163,7 +162,6 @@
           <div class="hint" id="hDiffHint"></div>
         </div>
 
-        <!-- معلومات إضافية -->
         <div class="section" id="moreSection" style="display:none;">
           <div class="section-title">
             <span id="moreTitle">معلومات أكثر عن عمرك</span>
@@ -184,7 +182,6 @@
             <a href="privacy.html" id="lnkPrivacy">سياسة الخصوصية</a> ·
             <a href="#contact" onclick="openDetails('contact')" id="lnkContact">تواصل</a>
           </div>
-
           <details id="about">
             <summary id="sumAbout">من نحن</summary>
             <p id="aboutText">
@@ -192,7 +189,6 @@
               الهدف هو تقديم تجربة سريعة وخفيفة تعمل على الجوال والكمبيوتر.
             </p>
           </details>
-
           <details id="contact">
             <summary id="sumContact">تواصل</summary>
             <p id="contactIntro">إذا عندك اقتراحات أو ملاحظات على الموقع، تواصل معي عبر الوسائل التالية:</p>
@@ -209,7 +205,7 @@
     </div>
   </div>
 
-  <!-- Share fallback modal -->
+  <!-- نافذة المشاركة -->
   <div class="modal" id="shareModal" role="dialog" aria-modal="true" aria-label="Share dialog">
     <div class="modal-card">
       <div class="modal-head">
@@ -231,13 +227,11 @@
 
   <script src="assets/js/app.js"></script>
 
-  <!-- تسجيل Service Worker لدعم PWA -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/service-worker.js')
-          .then(reg => console.log('Service Worker registered', reg))
-          .catch(err => console.log('Service Worker registration failed', err));
+          .catch(err => console.log('Service Worker error:', err));
       });
     }
   </script>
