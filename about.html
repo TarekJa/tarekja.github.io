@@ -8,9 +8,10 @@
 
   <link rel="canonical" href="https://tarekja.github.io/about.html" />
   <link rel="icon" href="assets/img/favicon.ico" />
+  <link rel="apple-touch-icon" href="assets/img/favicon-512.png" />
 
-  <title>من نحن | About</title>
-  <link rel="stylesheet" href="assets/css/privacy.css">  <!-- نفس ستايل privacy للتوحيد -->
+  <title id="pageTitle">من نحن | About Us</title>
+  <link rel="stylesheet" href="assets/css/privacy.css"> <!-- نفس الستايل للتوحيد -->
 </head>
 <body>
   <div class="wrap">
@@ -25,33 +26,38 @@
             <option value="en">English</option>
           </select>
         </div>
-        <div><a href="/" id="backHome">العودة للرئيسية</a> | <a href="privacy.html">سياسة الخصوصية</a></div>
+        <div>
+          <a href="/" id="backHome">العودة للرئيسية</a> •
+          <a href="privacy.html" id="privacyLink">سياسة الخصوصية</a>
+        </div>
       </div>
 
-      <h1 id="title">من نحن</h1>
+      <h1 id="title"></h1>
       <p id="updated"></p>
 
       <div class="hr"></div>
 
-      <h2 id="h1">مقدمة</h2>
+      <h2 id="h1"></h2>
       <p id="p1"></p>
 
-      <h2 id="h2">كيف تعمل الحاسبة؟</h2>
+      <h2 id="h2"></h2>
       <p id="p2"></p>
 
-      <h2 id="h3">لماذا الدقة مهمة؟</h2>
+      <h2 id="h3"></h2>
       <p id="p3"></p>
 
-      <h2 id="h4">المستقبل</h2>
+      <h2 id="h4"></h2>
       <p id="p4"></p>
 
-      <h2 id="h5">التواصل</h2>
+      <h2 id="h5"></h2>
       <p id="p5"></p>
 
       <div class="foot" id="foot"></div>
-<script src="assets/js/i18n.js"></script>
+
     </div>
   </div>
-  <script src="assets/js/privacy.js"></script>  <!-- نفس السكريبت، بس غير النصوص في I18N إذا بدك -->
+
+  <!-- السكريبت المشترك للترجمة (يغطي كل الصفحات) -->
+  <script src="assets/js/i18n.js"></script>
 </body>
 </html>
