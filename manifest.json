@@ -1,0 +1,16 @@
+{
+  "name": "Live Age Calculator",
+  "short_name": "Age Calc",
+  "description": "حاسبة العمر المباشر بالثواني والدقائق والساعات والأيام.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "assets/img/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
