@@ -1,128 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-  
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#0f172a" />
-:root{
-  --bg:#0f172a; --panel:#020617; --text:#e5e7eb; --muted:#94a3b8; --accent:#38bdf8; --line:#1e293b;
-}
-:root{ color-scheme: dark; }
-body{ margin:0; font-family: 'Segoe UI', Tahoma, sans-serif; background:var(--bg); color:var(--text); }
-.wrap{ min-height:100vh; display:flex; justify-content:center; padding:18px 10px; }
-.card{ width:min(820px, 96vw); background:var(--panel); border:1px solid rgba(255,255,255,0.06); border-radius:16px; padding:18px; box-shadow:0 0 40px rgba(0,0,0,0.7); }
-.top{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; }
-.lang{ display:flex; align-items:center; gap:8px; color:var(--muted); font-size:13px; }
-select{ background:rgba(255,255,255,0.06); color:var(--text); border:1px solid var(--line); border-radius:10px; padding:8px 10px; cursor:pointer; }
-option{ background:#0b1220; color:var(--text); }
-h1{ margin:6px 0 10px 0; color:var(--accent); font-size:20px; }
-h2{ margin:14px 0 8px 0; font-size:16px; }
-p, li{ color:var(--muted); line-height:1.8; }
-a{ color:var(--accent); text-decoration:none; }
-a:hover{ text-decoration:underline; }
-.hr{ height:1px; background:rgba(255,255,255,0.08); margin:12px 0; }
-.foot{ margin-top:12px; color:var(--muted); font-size:12.5px; }
-  <link rel="canonical" href="https://tarekja.github.io/privacy.html" />
-  <link rel="icon" href="assets/img/favicon.ico" />
-const I18N = {
-  ar: {
-    dir:"rtl", lang:"ar",
-    lblLang:"اللغة", back:"العودة للرئيسية",
-    title:"سياسة الخصوصية",
-    updated:"آخر تحديث: 11 يناير 2026",
-    h1:"ماذا نجمع؟",
-    p1:"لا نقوم بجمع بيانات شخصية أو إرسال مدخلاتك إلى خوادمنا. الحساب يتم داخل المتصفح فقط. ومع ذلك، قد نستخدم أدوات مثل Google Analytics لفهم الاستخدام العام دون تحديد الهوية.",
-    h2:"التخزين المحلي",
-    p2:"قد يتم حفظ الاسم/تاريخ الميلاد/وقت الميلاد محليًا داخل جهازك (Local Storage) لتسهيل الاستخدام. يمكنك حذف ذلك باستخدام زر (مسح) في الصفحة الرئيسية أو عبر إعدادات المتصفح.",
-    h3:"الإعلانات وملفات تعريف الارتباط",
-    p3:"قد يتم عرض إعلانات عبر Google AdSense. قد تستخدم الجهات الإعلانية ملفات تعريف الارتباط (Cookies) أو معرفات مماثلة لتقديم الإعلانات وقياس الأداء وفق سياسات Google. يمكنك إدارة الإعدادات من خلال متصفحك.",
-    h4:"مشاركة الروابط",
-    p4:"عند استخدام ميزة المشاركة، قد يتضمن الرابط معلومات مثل تاريخ/وقت الميلاد (وفق ما تختاره) لفتح نفس الإدخالات لدى الطرف الآخر. لا يتم إرسال هذه المعلومات إلى خوادمنا. كن حذراً من مشاركة معلومات شخصية.",
-    h5:"التواصل",
-    p5:"للاستفسارات أو الشكاوى: tarekjawish89@gmail.com",
-    foot:"بالاستمرار في استخدام الموقع، أنت توافق على هذه السياسة وأي تحديثات مستقبلية."
-  },
-  en: {
-    dir:"ltr", lang:"en",
-    lblLang:"Language", back:"Back to home",
-    title:"Privacy Policy",
-    updated:"Last updated: Jan 11, 2026",
-    h1:"What do we collect?",
-    p1:"We do not collect personal data or send your inputs to our servers. Calculations run locally in your browser. However, we may use tools like Google Analytics to understand general usage without identifying individuals.",
-    h2:"Local storage",
-    p2:"We may store your name/birth date/birth time locally (Local Storage) to improve usability. You can delete it using the (Clear) button on the home page or via browser settings.",
-    h3:"Ads & cookies",
-    p3:"We may show ads via Google AdSense. Advertising partners may use cookies or similar identifiers to deliver ads and measure performance under Google policies. You can manage settings through your browser.",
-    h4:"Link sharing",
-    p4:"When using the share feature, the link may include items like birth date/time (as you choose) so the recipient can open the same inputs. We do not send this information to our servers. Be cautious when sharing personal info.",
-    h5:"Contact",
-    p5:"For inquiries or complaints: tarekjawish89@gmail.com",
-    foot:"By continuing to use the site, you agree to this policy and any future updates."
-  },
-  tr: {
-    dir:"ltr", lang:"tr",
-    lblLang:"Dil", back:"Ana sayfaya dön",
-    title:"Gizlilik Politikası",
-    updated:"Son güncelleme: 11 Ocak 2026",
-    h1:"Ne topluyoruz?",
-    p1:"Kişisel veri toplamıyoruz ve girdilerinizi sunucularımıza göndermiyoruz. Hesaplamalar yalnızca tarayıcı içinde yapılır. Ancak, genel kullanımı anlamak için Google Analytics gibi araçlar kullanabiliriz.",
-    h2:"Yerel depolama",
-    p2:"Kullanım kolaylığı için isim/doğum tarihi/doğum saatini cihazınızda yerel olarak (Local Storage) saklayabiliriz. Ana sayfadaki (Temizle) butonu ile veya tarayıcı ayarlarından silebilirsiniz.",
-    h3:"Reklamlar ve çerezler",
-    p3:"Google AdSense üzerinden reklam gösterebiliriz. Reklam iş ortakları, Google politikaları kapsamında reklam sunumu ve ölçüm için çerezler veya benzer tanımlayıcılar kullanabilir. Tarayıcınızdan ayarlayabilirsiniz.",
-    h4:"Bağlantı paylaşımı",
-    p4:"Paylaşım özelliğinde, bağlantı (seçiminize bağlı olarak) doğum tarihi/saat gibi bilgileri içerebilir. Bu bilgiler sunucularımıza gönderilmez. Kişisel bilgi paylaşırken dikkatli olun.",
-    h5:"İletişim",
-    p5:"Sorular veya şikayetler için: tarekjawish89@gmail.com",
-    foot:"Siteyi kullanmaya devam ederek bu politikayı ve gelecek güncellemeleri kabul etmiş olursunuz."
-  }
-};
-function $(id){ return document.getElementById(id); }
-function pickLang(){
-  const p = new URLSearchParams(location.search);
-  const fromUrl = p.get("lang");
-  if (fromUrl && I18N[fromUrl]) return fromUrl;
-  const saved = localStorage.getItem("lac_lang");
-  if (saved && I18N[saved]) return saved;
-  const nav = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language||"en"];
-  const lc = nav.map(x => String(x).toLowerCase());
-  if (lc.some(x=>x.startsWith("ar"))) return "ar";
-  if (lc.some(x=>x.startsWith("tr"))) return "tr";
-  return "en";
-}
-function setLang(lang){
-  if (!I18N[lang]) lang = "ar";
-  const t = I18N[lang];
-  document.documentElement.lang = t.lang;
-  document.documentElement.dir = t.dir;
-  $("lblLang").textContent = t.lblLang;
-  $("backHome").textContent = t.back;
-  $("title").textContent = t.title;
-  $("updated").textContent = t.updated;
-  $("h1").textContent = t.h1;
-  $("p1").textContent = t.p1;
-  $("h2").textContent = t.h2;
-  $("p2").textContent = t.p2;
-  $("h3").textContent = t.h3;
-  $("p3").textContent = t.p3;
-  $("h4").textContent = t.h4;
-  $("p4").textContent = t.p4;
-  $("h5").textContent = t.h5;
-  $("p5").textContent = t.p5;
-  $("foot").textContent = t.foot;
-  $("langSelect").value = lang;
-}
-document.addEventListener("DOMContentLoaded", ()=>{
-  const lang = pickLang();
-  setLang(lang);
-  $("langSelect").addEventListener("change", (e)=>{
-    localStorage.setItem("lac_lang", e.target.value);
-    setLang(e.target.value);
-  });
-});
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0f172a">
+
+  <link rel="canonical" href="https://tarekja.github.io/privacy.html">
+  <link rel="icon" href="assets/img/favicon.ico">
+
   <title>سياسة الخصوصية | Privacy Policy</title>
   <link rel="stylesheet" href="assets/css/privacy.css">
 </head>
@@ -139,7 +25,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
             <option value="en">English</option>
           </select>
         </div>
-        <div><a href="/" id="backHome">العودة للرئيسية</a> | <a href="about.html">من نحن</a></div>
+        <div>
+          <a href="/" id="backHome">العودة للرئيسية</a> • 
+          <a href="about.html">من نحن</a>
+        </div>
       </div>
 
       <h1 id="title">سياسة الخصوصية</h1>
@@ -147,27 +36,29 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
       <div class="hr"></div>
 
-      <h2 id="h1">ماذا نجمع؟</h2>
+      <h2 id="h1">ما الذي نجمعه؟</h2>
       <p id="p1"></p>
 
-      <h2 id="h2">التخزين المحلي</h2>
+      <h2 id="h2">التخزين المحلي (Local Storage)</h2>
       <p id="p2"></p>
 
       <h2 id="h3">الإعلانات وملفات تعريف الارتباط</h2>
       <p id="p3"></p>
 
-      <h2 id="h4">مشاركة الروابط</h2>
+      <h2 id="h4">ميزة مشاركة الرابط</h2>
       <p id="p4"></p>
 
-      <h2 id="h5">التواصل</h2>
+      <h2 id="h5">كيف نتواصل معك؟</h2>
       <p id="p5"></p>
+
+      <h2 id="h6">التغييرات على السياسة</h2>
+      <p id="p6"></p>
 
       <div class="foot" id="foot"></div>
 
     </div>
   </div>
+
   <script src="assets/js/privacy.js"></script>
-  
 </body>
-  
 </html>
