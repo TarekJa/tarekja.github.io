@@ -801,7 +801,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-  if ($("birthDate").value){
+  // لا تحسب تلقائيًا إلا لو التاريخ صالح وفي الماضي
+const birthDateInput = $("birthDate").value;
+if (birthDateInput) {
+  const birthDate = buildLocalDate(birthDateInput, $("birthTime").value || "00:00:00");
+  if (birthDate && birthDate.getTime() <= Date.now()) {
     start();
+  } else {
+    // إذا التاريخ في المستقبل أو غير صالح → لا تعمل شيء تلقائي
+    resetApp(); // أو اتركه فاضي
   }
+}
 });
